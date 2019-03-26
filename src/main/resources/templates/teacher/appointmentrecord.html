@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>教辅系统</title>
+
+    <link rel="stylesheet" th:href="@{../../lib/element-ui/lib/theme-chalk/index.css}"/>
+    <link rel="stylesheet" th:href="@{../../lib/font/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{../../admin/user/css/user.css}"/>
+    <link rel="stylesheet" th:href="@{../../admin/user/css/public.css}"/>
+</head>
+<body>
+<div id="app">
+
+    <el-menu  mode="horizontal":default-active="activeIndex" @select="handleSelect">
+        <el-menu-item index="0" id="logo">教辅系统</el-menu-item>
+        <el-menu-item index="1"><a href="/teacher">首页</a></el-menu-item>
+        <el-menu-item index="2"><a href="/teachcourse">我教授的课程</a></el-menu-item>
+        <el-menu-item index="3"><a href="/appointment">预约</a></el-menu-item>
+
+        <el-menu-item id="author" index="7">
+            <img class="el-tooltip" src="http://tycoding.cn/author/avatar.png"/>
+            <el-dropdown>
+                <span class="el-dropdown-link">{{username}}<i class="el-icon-arrow-down el-icon--right"></i></span>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item divided><a href="/login">退出</a></el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
+        </el-menu-item>
+    </el-menu>
+
+    <div id="main">
+        <el-col>
+            <el-card shadow="hover">
+
+                <!-- 功能按钮 -->
+                <div>
+                    <span class="el-tag avue-tip">
+                    <i class="el-icon-info"></i>
+                    <span class="name">
+                        当前表格已选择
+                        <span class="count">{{count}}</span>
+                        项
+                    </span>
+                    <span @click.prevent="clearSelect()" style="cursor:pointer">&nbsp;&nbsp;清空</span>
+                    </span>
+                </div>
+
+                <!-- 列表 -->
+                <el-table
+                        ref="selectcourserecords"
+                        :data="appointmentrecords"
+                        border
+                        tooltip-effect="dark"
+                        style="width: 100%"
+                        @selection-change="selectChange">
+                    <el-table-column
+                            ref="selection"
+                            align="center"
+                            type="selection"
+                            width="55">
+                    </el-table-column>
+                    <el-table-column
+                            align="center"
+                            prop="sId"
+                            sortable
+                            label="学号"
+                            width="120">
+                    </el-table-column>
+                    <el-table-column
+                            align="center"
+                            prop="sName"
+                            sortable
+                            label="学生姓名"
+                            width="120">
+                    </el-table-column>
+                </el-table>
+            </el-card>
+        </el-col>
+    </div>
+
+    <!-- footer -->
+    <div class="footer">
+        <el-container>
+            <el-footer>
+                <el-row :gutter="20">
+                    <el-col :span="8" :offset="10">
+                        <div class="footer-inner">
+                            <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+                                <span class="with-love">
+                                    <i class="fa fa-heartbeat"></i>
+                                </span>
+                                <span class="author" itemprop="copyrightHolder">软件学院</span>
+                            </div>
+                        </div>
+                    </el-col>
+                </el-row>
+            </el-footer>
+        </el-container>
+    </div>
+
+</div>
+</body>
+
+<script type="text/javascript" th:src="@{../../lib/vue/vue.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/element-ui/lib/index.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/vue/vue-resource.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/vue/vuex.min.js}"></script>
+<script type="text/javascript" th:src="@{../../teacher/appointmentrecord/js/appointmentrecord.js}"></script>
+</html>

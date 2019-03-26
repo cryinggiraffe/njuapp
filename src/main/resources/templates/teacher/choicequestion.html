@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>教辅系统</title>
+
+    <link rel="stylesheet" th:href="@{../../lib/element-ui/lib/theme-chalk/index.css}"/>
+    <link rel="stylesheet" th:href="@{../../lib/font/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{../../admin/user/css/user.css}"/>
+    <link rel="stylesheet" th:href="@{../../admin/user/css/public.css}"/>
+</head>
+<body>
+<div id="app">
+
+    <el-menu  mode="horizontal":default-active="activeIndex" @select="handleSelect">
+        <el-menu-item index="0" id="logo">教辅系统</el-menu-item>
+        <el-menu-item index="1"><a href="/teacher">首页</a></el-menu-item>
+        <el-submenu index="2">
+            <template slot="title">文件上传</template>
+            <el-menu-item index="2-1"><a href="/uploadcourseware">上传课件</a></el-menu-item>
+            <el-menu-item index="2-2"><a href="/uploadvideo">上传视频</a></el-menu-item>
+        </el-submenu>
+        <el-submenu index="3">
+            <template slot="title">发布作业</template>
+            <el-menu-item index="3-1"><a href="/choicequestion">发布选择题</a></el-menu-item>
+            <el-menu-item index="3-2"><a href="/simplequestion">发布简答题</a></el-menu-item>
+            <el-menu-item index="3-3"><a href="/homework">发布作业</a></el-menu-item>
+        </el-submenu>
+        <el-submenu index="4">
+            <template slot="title">到课情况</template>
+            <el-menu-item index="4-1"><a href="/lesson">课堂到课情况</a></el-menu-item>
+            <el-menu-item index="4-2"><a href="/attendlessonrecord">学生到课记录</a></el-menu-item>
+        </el-submenu>
+        <el-menu-item index="5"><a href="/selectcourserecord">选课记录</a></el-menu-item>
+        <el-submenu index="6">
+            <template slot="title">总结及反馈</template>
+            <el-menu-item index="6-1"><a href="/coursesummary">课程总结</a></el-menu-item>
+            <el-menu-item index="6-2"><a href="/coursecommentrecord">课程反馈</a></el-menu-item>
+            <el-menu-item index="6-3"><a href="/coursereviewrecord">成绩复议</a></el-menu-item>
+        </el-submenu>
+
+        <el-menu-item id="author" index="7">
+            <img class="el-tooltip" src="http://tycoding.cn/author/avatar.png"/>
+            <el-dropdown>
+                <span class="el-dropdown-link">{{username}}<i class="el-icon-arrow-down el-icon--right"></i></span>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item divided><a href="/login">退出</a></el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
+        </el-menu-item>
+    </el-menu>
+
+    <div id="main">
+        <el-col>
+            <el-card shadow="hover">
+                <!-- 搜索框 -->
+                <el-form :inline="true" :model="searchEntity" class="demo-form-inline">
+                    <!--
+                    <el-form-item label="用户名">
+                        <el-input v-model="searchEntity.username" placeholder="用户名"></el-input>
+                    </el-form-item>
+
+                    <el-form-item>
+                        <el-button
+                                type="primary"
+                                icon="el-icon-search"
+                                @click="search">查询
+                        </el-button>
+                        <el-button
+                                icon="el-icon-delete"
+                                @click="searchEntity={}"
+                                type="primary" plain>清空
+                        </el-button>
+                    </el-form-item>
+                    -->
+                </el-form>
+                <!-- 功能按钮 -->
+                <div>
+                    <el-row>
+                        <el-button @click="saveBtn" type="primary" icon="el-icon-plus">新增</el-button>
+                    </el-row>
+                    <span class="el-tag avue-tip">
+                    <i class="el-icon-info"></i>
+                    <span class="name">
+                        当前表格已选择
+                        <span class="count">{{count}}</span>
+                        项
+                    </span>
+                    <span @click.prevent="clearSelect()" style="cursor:pointer">&nbsp;&nbsp;清空</span>
+                </span>
+                </div>
+                <!-- 列表 -->
+                <el-table
+                        ref="users"
+                        :data="choicequestions"
+                        border
+                        tooltip-effect="dark"
+                        style="width: 100%"
+                        @selection-change="selectChange">
+                    <el-table-column
+                            ref="selection"
+                            align="center"
+                            type="selection"
+                            width="55">
+                    </el-table-column>
+                    <el-table-column
+                            prop="cqId"
+                            align="center"
+                            sortable
+                            fixed
+                            label="题目ID"
+                            width="120">
+                    </el-table-column>
+                    <el-table-column
+                            align="center"
+                            prop="cqContent"
+                            sortable
+                            label="题目内容"
+                            width="260"
+                            show-overflow-tooltip>
+                    </el-table-column>
+                    <el-table-column
+                            align="center"
+                            prop="optionA"
+                            label="A"
+                            width="120">
+                    </el-table-column>
+                    <el-table-column
+                            align="center"
+                            prop="optionB"
+                            label="A"
+                            width="120">
+                    </el-table-column>
+                    <el-table-column
+                            align="center"
+                            prop="optionC"
+                            label="C"
+                            width="120">
+                    </el-table-column>
+                    <el-table-column
+                            align="center"
+                            prop="optionD"
+                            sortable
+                            label="D"
+                            width="120">
+                    </el-table-column>
+                    <el-table-column
+                            align="center"
+                            prop="cqCorrectAnswer"
+                            sortable
+                            label="正确答案"
+                            width="120">
+                    </el-table-column>
+                    <el-table-column label="操作" align="center" fixed="right">
+                        <template slot-scope="scope">
+                            <el-button
+                                    size="mini"
+                                    type="danger"
+                                    @click="handleDelete(scope.row.cqid)">删除
+                            </el-button>
+                            <el-button
+                                    size="mini"
+                                    @click="handleEdit(scope.row.cqid)">编辑
+                            </el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+
+
+                <br/>
+                <br/>
+            </el-card>
+        </el-col>
+    </div>
+
+    <!-- footer -->
+    <div class="footer">
+        <el-container>
+            <el-footer>
+                <el-row :gutter="20">
+                    <el-col :span="8" :offset="10">
+                        <div class="footer-inner">
+                            <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+                                <span class="with-love">
+                                    <i class="fa fa-heartbeat"></i>
+                                </span>
+                                <span class="author" itemprop="copyrightHolder">软件学院</span>
+                            </div>
+                        </div>
+                    </el-col>
+                </el-row>
+            </el-footer>
+        </el-container>
+    </div>
+
+    <!-- 新增按钮的dialog -->
+    <el-dialog title="添加信息" :visible.sync="showSave" width="30%" :close-on-click-modal="false"
+               :close-on-press-escape="false">
+        <el-form class="editor-form" :model="editor" status-icon ref="editor"
+                 label-width="100px">
+            <el-form-item prop="cqContent" label="题目内容" class="is-required"
+                          :rules="[{ required: true, message: '题目内容不能为空'}]">
+                <el-input v-model="editor.cqContent" placeholder="题目内容"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item prop="optionA" label="A" class="is-required"
+                          :rules="[{ required: true, message: '选项A不能为空'}]">
+                <el-input v-model.number="editor.optionA" placeholder="A"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item prop="optionB" label="B" class="is-required"
+                          :rules="[{ required: true, message: '选项B不能为空'}]">
+                <el-input v-model="editor.optionB" placeholder="B"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item prop="optionC" label="C" class="is-required"
+                          :rules="[{ required: true, message: '选项C不能为空'}]">
+                <el-input v-model="editor.optionC" placeholder="C"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item prop="optionD" label="D" class="is-required"
+                          :rules="[{ required: true, message: '选项D不能为空'}]">
+                <el-input v-model="editor.optionD" placeholder="D"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item prop="cqCorrectAnswer" label="正确答案" class="is-required"
+                          :rules="[{ required: true, message: '正确答案不能为空'}]">
+                <el-input v-model="editor.cqCorrectAnswer" placeholder="正确答案"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="showSave = false">取 消</el-button>
+            <el-button type="primary" @click="save('editor')">新增</el-button>
+        </div>
+    </el-dialog>
+
+    <!-- 编辑按钮的dialog -->
+    <el-dialog title="编辑信息" :visible.sync="showEditor" width="30%" :close-on-click-modal="false"
+               :close-on-press-escape="false">
+        <el-form class="editor-form" :model="editor" status-icon ref="editor"
+                 label-width="100px">
+            <el-form-item prop="cqContent" label="题目内容" class="is-required"
+                          :rules="[{ required: true, message: '题目内容不能为空'}]">
+                <el-input v-model="editor.cqContent" placeholder="题目内容"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item prop="optionA" label="A" class="is-required"
+                          :rules="[{ required: true, message: '选项A不能为空'}]">
+                <el-input v-model.number="editor.optionA" placeholder="A"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item prop="optionB" label="B" class="is-required"
+                          :rules="[{ required: true, message: '选项B不能为空'}]">
+                <el-input v-model="editor.optionB" placeholder="B"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item prop="optionC" label="C" class="is-required"
+                          :rules="[{ required: true, message: '选项C不能为空'}]">
+                <el-input v-model="editor.optionC" placeholder="C"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item prop="optionD" label="D" class="is-required"
+                          :rules="[{ required: true, message: '选项D不能为空'}]">
+                <el-input v-model="editor.optionD" placeholder="D"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item prop="cqCorrectAnswer" label="正确答案" class="is-required"
+                          :rules="[{ required: true, message: '正确答案不能为空'}]">
+                <el-input v-model="editor.cqCorrectAnswer" placeholder="正确答案"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="showEditor = false">取 消</el-button>
+            <el-button type="primary" @click="sureEdit('editor')">修改</el-button>
+        </div>
+    </el-dialog>
+
+</div>
+
+</body>
+
+
+<script type="text/javascript" th:src="@{../../lib/vue/vue.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/element-ui/lib/index.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/vue/vue-resource.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/vue/vuex.min.js}"></script>
+<script type="text/javascript" th:src="@{../../teacher/choicequestion/js/choicequestion.js}"></script>
+
+
+</html>

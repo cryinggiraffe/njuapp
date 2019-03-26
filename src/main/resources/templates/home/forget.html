@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>教辅系统</title>
+    <link rel="stylesheet" th:href="@{../../lib/element-ui/lib/theme-chalk/index.css}"/>
+    <link rel="stylesheet" th:href="@{../../admin/login/css/login.css}">
+    <link rel="stylesheet" th:href="@{../../lib/font/icon/iconfont.css}">
+</head>
+<body>
+<div id="app">
+
+
+    <el-menu mode="horizontal" :default-active="activeIndex">
+        <el-menu-item index="0" id="logo">教辅系统</el-menu-item>
+    </el-menu>
+
+
+    <div v-if="true" id="login">
+        <el-main id="main">
+            <el-row type="flex" class="row-bg" justify="center">
+                <el-col :xs="8" :sm="9" :md="8" :lg="6" :xl="5">
+                    <el-card class="box-card">
+                        <div solt="header" class="header">
+                            <span class="item">忘记密码</span>
+                        </div>
+                        <div id="form">
+                            <!-- 登录表单 -->
+                            <el-form :model="forget" status-icon ref="forget">
+                                <el-form-item prop="username"
+                                              :rules="[{ required: true, message: '用户名不能为空'}]">
+                                    <el-input prefix-icon="el-icon-ump-yonghu" v-model="forget.username"
+                                              auto-complete="off"></el-input>
+                                </el-form-item>
+                                <el-form-item prop="id_card"
+                                              :rules="[{ required: true, message: '身份证号不能为空'}]">
+                                    <el-input prefix-icon="el-icon-ump-yonghu" v-model="forget.id_card"
+                                              auto-complete="off"></el-input>
+                                </el-form-item>
+                                <el-form-item prop="password1"
+                                              :rules="[{ required: true, message: '密码不能为空'}]">
+                                    <el-input prefix-icon="el-icon-ump-mima" type="password"
+                                              v-model="forget.password1"
+                                              auto-complete="off"></el-input>
+                                </el-form-item>
+                                <el-form-item prop="password2"
+                                              :rules="[{ required: true, message: '密码不能为空'}]">
+                                    <el-input prefix-icon="el-icon-ump-mima" type="password"
+                                              v-model="forget.password2" @keyup.enter.native="loginEnter('forget')"
+                                              auto-complete="off"></el-input>
+                                </el-form-item>
+                                <el-form-item>
+                                    <el-button class="btn" type="primary" @click="submitForm('forget')">修改
+                                    </el-button>
+                                </el-form-item>
+                            </el-form>
+                            <div>
+                                <p><a href="login" class="tips">返回</a></p>
+                            </div>
+                        </div>
+                    </el-card>
+                </el-col>
+            </el-row>
+        </el-main>
+    </div>
+</div>
+</body>
+<script type="text/javascript" th:src="@{../../lib/vue/vue.js}"></script>
+<!--<script type="text/javascript" th:src="@{../../lib/vue/vuex.min.js}"></script>-->
+<script type="text/javascript" th:src="@{../../lib/element-ui/lib/index.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/vue/vue-resource.js}"></script>
+<script type="text/javascript" th:src="@{../../admin/login/js/forget.js}"></script>
+</html>

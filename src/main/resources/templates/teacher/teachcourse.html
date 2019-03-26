@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>教辅系统</title>
+
+    <link rel="stylesheet" th:href="@{../../lib/element-ui/lib/theme-chalk/index.css}"/>
+    <link rel="stylesheet" th:href="@{../../lib/font/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{../../admin/user/css/user.css}"/>
+    <link rel="stylesheet" th:href="@{../../admin/user/css/public.css}"/>
+
+</head>
+<body>
+<div id="app">
+
+    <el-menu  mode="horizontal":default-active="activeIndex">
+        <el-menu-item index="0" id="logo">教辅系统</el-menu-item>
+        <el-menu-item index="1"><a href="/teacher">首页</a></el-menu-item>
+        <el-menu-item index="2"><a href="/teachcourse">我教授的课程</a></el-menu-item>
+        <el-menu-item index="3"><a href="/appointment">预约</a></el-menu-item>
+
+        <el-menu-item id="author" index="7">
+            <img class="el-tooltip" src="http://tycoding.cn/author/avatar.png"/>
+            <el-dropdown>
+                <span class="el-dropdown-link">{{username}}<i class="el-icon-arrow-down el-icon--right"></i></span>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item divided><a href="/login">退出</a></el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
+        </el-menu-item>
+    </el-menu>
+
+    <div id="main">
+        <el-col>
+            <el-card shadow="hover">
+
+                <!-- 功能按钮 -->
+                <div>
+                    <el-row>
+                        <el-button @click="saveBtn" type="primary" icon="el-icon-plus">新增</el-button>
+                    </el-row>
+                    <span class="el-tag avue-tip">
+                    <i class="el-icon-info"></i>
+                    <span class="name">
+                        当前表格已选择
+                        <span class="count">{{count}}</span>
+                        项
+                    </span>
+                    <span @click.prevent="clearSelect()" style="cursor:pointer">&nbsp;&nbsp;清空</span>
+                    </span>
+                </div>
+
+                <!-- 列表 -->
+                <el-table
+                        ref="courses"
+                        :data="courses"
+                        border
+                        tooltip-effect="dark"
+                        style="width: 100%"
+                        @selection-change="selectChange">
+                    <el-table-column
+                            ref="selection"
+                            align="center"
+                            type="selection"
+                            width="55">
+                    </el-table-column>
+                    <el-table-column
+                            prop="cId"
+                            align="center"
+                            sortable
+                            fixed
+                            label="课程ID"
+                            width="120">
+                    </el-table-column>
+                    <el-table-column
+                            align="center"
+                            prop="cName"
+                            sortable
+                            label="课程名"
+                            width="120">
+                    </el-table-column>
+                    <el-table-column
+                            align="center"
+                            prop="start"
+                            label="起始日期"
+                            width="120">
+                    </el-table-column>
+                    <el-table-column
+                            align="center"
+                            prop="end"
+                            label="结束日期"
+                            width="120">
+                    </el-table-column>
+                    <el-table-column
+                            align="center"
+                            prop="token"
+                            label="选课码"
+                            width="120">
+                    </el-table-column>
+                    <el-table-column label="操作" align="center" fixed="right">
+                        <template slot-scope="scope">
+                            <el-button
+                                    size="mini"
+                                    type="danger"
+                                    @click="handleDelete(scope.row.cId)">删除
+                            </el-button>
+                            <el-button
+                                    size="mini"
+                                    @click="handleEdit(scope.row.cId)">编辑
+                            </el-button>
+                            <el-button
+                                    size="mini"
+                                    type="danger"
+                                    @click="handle(scope.row.cId)">课程操作
+                            </el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </el-card>
+        </el-col>
+    </div>
+
+    <!-- footer -->
+    <div class="footer">
+        <el-container>
+            <el-footer>
+                <el-row :gutter="20">
+                    <el-col :span="8" :offset="10">
+                        <div class="footer-inner">
+                            <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+                                <span class="with-love">
+                                    <i class="fa fa-heartbeat"></i>
+                                </span>
+                                <span class="author" itemprop="copyrightHolder">软件学院</span>
+                            </div>
+                        </div>
+                    </el-col>
+                </el-row>
+            </el-footer>
+        </el-container>
+    </div>
+
+    <!-- 新增按钮的dialog -->
+    <el-dialog title="添加信息" :visible.sync="showSave" width="30%" :close-on-click-modal="false"
+               :close-on-press-escape="false">
+        <el-form class="editor-form" :model="saver" status-icon ref="saver"
+                 label-width="100px">
+            <el-form-item prop="cName" label="课程名" class="is-required"
+                          :rules="[{ required: true, message: '课程名不能为空'}]">
+                <el-input v-model="saver.cName" placeholder="课程名"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item prop="start" label="起始日期" class="is-required"
+                          :rules="[{ required: true, message: '起始日期不能为空'}]">
+                <el-input v-model="saver.start" placeholder="起始日期"
+                          auto-complete="off" type="date"></el-input>
+            </el-form-item>
+            <el-form-item prop="end" label="结束日期" class="is-required"
+                          :rules="[{ required: true, message: '结束日期不能为空'}]">
+                <el-input v-model="saver.end" placeholder="结束日期"
+                          auto-complete="off" type="date"></el-input>
+                <!--
+                <el-date-picker
+                        v-model="saver.end"
+                        type="date"
+                        placeholder="结束日期">
+                </el-date-picker>
+                -->
+            </el-form-item>
+            <el-form-item prop="token" label="选课码" class="is-required"
+                          :rules="[{ required: true, message: '选课码不能为空'}]">
+                <el-input v-model.number="saver.token" placeholder="选课码"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="showSave = false">取 消</el-button>
+            <el-button type="primary" @click="save('saver')">新增</el-button>
+        </div>
+    </el-dialog>
+
+    <!-- 编辑按钮的dialog -->
+    <el-dialog title="编辑信息" :visible.sync="showEditor" width="30%" :close-on-click-modal="false"
+               :close-on-press-escape="false">
+        <el-form class="editor-form" :model="editor" status-icon ref="editor"
+                 label-width="100px">
+            <el-form-item prop="cName" label="课程名" class="is-required"
+                          :rules="[{ required: true, message: '课程名不能为空'}]">
+                <el-input v-model="editor.cName" placeholder="课程名"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item prop="token" label="选课码" class="is-required"
+                          :rules="[{ required: true, message: '选课码不能为空'}]">
+                <el-input v-model.number="editor.token" placeholder="选课码"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="showEditor = false">取 消</el-button>
+            <el-button type="primary" @click="sureEdit('editor')">修改</el-button>
+        </div>
+    </el-dialog>
+
+</div>
+</body>
+
+<script type="text/javascript" th:src="@{../../lib/vue/vue.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/element-ui/lib/index.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/vue/vue-resource.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/vue/vuex.min.js}"></script>
+<script type="text/javascript" th:src="@{../../teacher/teachcourse/js/teachcourse.js}"></script>
+</html>
