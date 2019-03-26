@@ -52,19 +52,19 @@ new Vue({
                     this.loadings(); //加载动画
 
                     //提交表单
-                    this.$http.post('/forget', {
+                    this.$http.post('/TeachingAssistantSystem/forget', {
                         username: this.forget.username,
                         id_card: this.forget.id_card,
                         password: password,
                     }).then(result => {
-                        // 判断用户是否登录成功，后端返回JSON格式数据，不然娶不到数据
+                        // 判断用户是否登录成功，后端返回JSON格式数据，不然取不到数据
                         if (result.body.success) {
                         // sessionStorage.setItem("name", this.login.name);
                         // sessionStorage.setItem("token", this.login);
 
                         // this.$store.dispatch("token", this.login);
 
-                        window.location.href = "/login";
+                        window.location.href = "/TeachingAssistantSystem/login";
                         this.loading.close(); //关闭动画加载
                     } else {
                         // 弹出错误信息框

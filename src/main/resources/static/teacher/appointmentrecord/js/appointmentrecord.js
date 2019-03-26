@@ -64,7 +64,7 @@ var vm = new Vue({
 
         findAllAppointRecords(){
             this.loadings();
-            this.$http.post('/appointmentrecord/findAllAppointRecords',
+            this.$http.post('/TeachingAssistantSystem/appointmentrecord/findAllAppointRecords',
                 {
                     aId: this.aId
                 }).then(result => {

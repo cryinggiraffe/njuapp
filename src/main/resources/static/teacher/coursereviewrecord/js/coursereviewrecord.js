@@ -63,7 +63,7 @@ var vm = new Vue({
 
         findAllCourseReviewRecords(){
             this.loadings();
-            this.$http.post('/coursereviewrecord/findAllCourseReviewRecords',
+            this.$http.post('/TeachingAssistantSystem/coursereviewrecord/findAllCourseReviewRecords',
                 {
                     cId: this.cId
                 }).then(result => {
@@ -89,7 +89,7 @@ var vm = new Vue({
             this.showEditor = true;
             this.editor = {}; //清空表单
             //查询当前id对应的数据
-            this.$http.post('/coursereviewrecord/findByCrId',
+            this.$http.post('/TeachingAssistantSystem/coursereviewrecord/findByCrId',
                 {
                     crId: id
                 }).then(result => {
@@ -112,7 +112,7 @@ var vm = new Vue({
 
             console.log(this.editor)
             //调用更新数据的接口
-            this.$http.post('/coursereviewrecord/updateResult', {
+            this.$http.post('/TeachingAssistantSystem/coursereviewrecord/updateResult', {
                 crId: this.editor.crId,
                 result: this.editor.result
             }).then(result => {

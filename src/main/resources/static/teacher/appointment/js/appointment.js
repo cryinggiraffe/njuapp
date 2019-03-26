@@ -69,7 +69,7 @@ var vm = new Vue({
 
         findAllAppointments(){
             this.loadings();
-            this.$http.post('/appointment/findAllAppointments',
+            this.$http.post('/TeachingAssistantSystem/appointment/findAllAppointments',
                 {
                     tId: this.username
                 }).then(result => {
@@ -122,7 +122,7 @@ var vm = new Vue({
                     var date_end = new Date(this.editor.end + '');
                     var date_value_end = date_end.getTime();
                     //调用保存的接口
-                    this.$http.post('/appointment/create', {
+                    this.$http.post('/TeachingAssistantSystem/appointment/create', {
                         tId: this.username,
                         start: date_value_start,
                         end: date_value_end,
@@ -188,7 +188,7 @@ var vm = new Vue({
 
             this.aId = id;
             //查询当前id对应的数据
-            this.$http.post('/appointment/findByAId',
+            this.$http.post('/TeachingAssistantSystem/appointment/findByAId',
                 {
                     aId: id
                 }).then(result => {
@@ -217,7 +217,7 @@ var vm = new Vue({
 
             console.log(this.editor)
             //调用更新数据的接口
-            this.$http.post('/appointment/update', {
+            this.$http.post('/TeachingAssistantSystem/appointment/update', {
                 aId: this.aId,
                 start: date_value_start,
                 end: date_value_end,
@@ -251,7 +251,7 @@ var vm = new Vue({
         handle(id){
             console.log(id)
             sessionStorage.setItem("aId", id);
-            window.location.href = "/appointmentrecord";
+            window.location.href = "/TeachingAssistantSystem/appointmentrecord";
         },
 
     },

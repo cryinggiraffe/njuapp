@@ -65,7 +65,7 @@ var vm = new Vue({
 
         findAllAbsentLessonRecords(){
             this.loadings();
-            this.$http.post('/absentlessonrecord/findAllAbsentLessonRecords',
+            this.$http.post('/TeachingAssistantSystem/absentlessonrecord/findAllAbsentLessonRecords',
                 {
                     cId: this.cId,
                     lId: this.lId

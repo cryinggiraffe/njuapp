@@ -14,16 +14,16 @@
 
     <el-menu  mode="horizontal":default-active="activeIndex" @select="handleSelect">
         <el-menu-item index="0" id="logo">教辅系统</el-menu-item>
-        <el-menu-item index="1"><a href="/teacher">首页</a></el-menu-item>
-        <el-menu-item index="2"><a href="/teachcourse">我教授的课程</a></el-menu-item>
-        <el-menu-item index="3"><a href="/appointment">预约</a></el-menu-item>
+        <el-menu-item index="1"><a href="/TeachingAssistantSystem/teacher">首页</a></el-menu-item>
+        <el-menu-item index="2"><a href="/TeachingAssistantSystem/teachcourse">我教授的课程</a></el-menu-item>
+        <el-menu-item index="3"><a href="/TeachingAssistantSystem/appointment">预约</a></el-menu-item>
 
         <el-menu-item id="author" index="7">
-            <img class="el-tooltip" src="http://tycoding.cn/author/avatar.png"/>
+            <img class="el-tooltip" th:src="@{../../TeachingAssistantSystem/img/userlogo.jpeg}"/>
             <el-dropdown>
                 <span class="el-dropdown-link">{{username}}<i class="el-icon-arrow-down el-icon--right"></i></span>
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item divided><a href="/login">退出</a></el-dropdown-item>
+                    <el-dropdown-item divided><a href="/TeachingAssistantSystem/login">退出</a></el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
         </el-menu-item>

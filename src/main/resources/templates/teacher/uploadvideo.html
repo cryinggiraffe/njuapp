@@ -4,47 +4,47 @@
     <meta charset="UTF-8">
     <title>教辅系统</title>
 
-    <link rel="stylesheet" th:href="@{../../lib/element-ui/lib/theme-chalk/index.css}"/>
-    <link rel="stylesheet" th:href="@{../../lib/font/css/font-awesome.min.css}"/>
-    <link rel="stylesheet" th:href="@{../../admin/user/css/user.css}"/>
-    <link rel="stylesheet" th:href="@{../../admin/user/css/public.css}"/>
+    <link rel="stylesheet" th:href="@{../../TeachingAssistantSystem/lib/element-ui/lib/theme-chalk/index.css}"/>
+    <link rel="stylesheet" th:href="@{../../TeachingAssistantSystem/lib/font/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{../../TeachingAssistantSystem/admin/user/css/user.css}"/>
+    <link rel="stylesheet" th:href="@{../../TeachingAssistantSystem/admin/user/css/public.css}"/>
 </head>
 <body>
 <div id="app">
 
     <el-menu  mode="horizontal":default-active="activeIndex" @select="handleSelect">
         <el-menu-item index="0" id="logo">教辅系统</el-menu-item>
-        <el-menu-item index="1"><a href="/teacher">首页</a></el-menu-item>
+        <el-menu-item index="1"><a href="/TeachingAssistantSystem/teacher">首页</a></el-menu-item>
         <el-submenu index="2">
             <template slot="title">文件上传</template>
-            <el-menu-item index="2-1"><a href="/uploadcourseware">上传课件</a></el-menu-item>
-            <el-menu-item index="2-2"><a href="/uploadvideo">上传视频</a></el-menu-item>
+            <el-menu-item index="2-1"><a href="/TeachingAssistantSystem/uploadcourseware">上传课件</a></el-menu-item>
+            <el-menu-item index="2-2"><a href="/TeachingAssistantSystem/uploadvideo">上传视频</a></el-menu-item>
         </el-submenu>
         <el-submenu index="3">
             <template slot="title">发布作业</template>
-            <el-menu-item index="3-1"><a href="/choicequestion">发布选择题</a></el-menu-item>
-            <el-menu-item index="3-2"><a href="/simplequestion">发布简答题</a></el-menu-item>
-            <el-menu-item index="3-3"><a href="/homework">发布作业</a></el-menu-item>
+            <el-menu-item index="3-1"><a href="/TeachingAssistantSystem/choicequestion">发布选择题</a></el-menu-item>
+            <el-menu-item index="3-2"><a href="/TeachingAssistantSystem/simplequestion">发布简答题</a></el-menu-item>
+            <el-menu-item index="3-3"><a href="/TeachingAssistantSystem/homework">发布作业</a></el-menu-item>
         </el-submenu>
         <el-submenu index="4">
             <template slot="title">到课情况</template>
-            <el-menu-item index="4-1"><a href="/lesson">课堂到课情况</a></el-menu-item>
-            <el-menu-item index="4-2"><a href="/attendlessonrecord">学生到课记录</a></el-menu-item>
+            <el-menu-item index="4-1"><a href="/TeachingAssistantSystem/lesson">课堂到课情况</a></el-menu-item>
+            <el-menu-item index="4-2"><a href="/TeachingAssistantSystem/attendlessonrecord">学生到课记录</a></el-menu-item>
         </el-submenu>
-        <el-menu-item index="5"><a href="/selectcourserecord">选课记录</a></el-menu-item>
+        <el-menu-item index="5"><a href="/TeachingAssistantSystem/selectcourserecord">选课记录</a></el-menu-item>
         <el-submenu index="6">
             <template slot="title">总结及反馈</template>
-            <el-menu-item index="6-1"><a href="/coursesummary">课程总结</a></el-menu-item>
-            <el-menu-item index="6-2"><a href="/coursecommentrecord">课程反馈</a></el-menu-item>
-            <el-menu-item index="6-3"><a href="/coursereviewrecord">成绩复议</a></el-menu-item>
+            <el-menu-item index="6-1"><a href="/TeachingAssistantSystem/coursesummary">课程总结</a></el-menu-item>
+            <el-menu-item index="6-2"><a href="/TeachingAssistantSystem/coursecommentrecord">课程反馈</a></el-menu-item>
+            <el-menu-item index="6-3"><a href="/TeachingAssistantSystem/coursereviewrecord">成绩复议</a></el-menu-item>
         </el-submenu>
 
         <el-menu-item id="author" index="7">
-            <img class="el-tooltip" src="http://tycoding.cn/author/avatar.png"/>
+            <img class="el-tooltip" th:src="@{../../TeachingAssistantSystem/img/userlogo.jpeg}"/>
             <el-dropdown>
                 <span class="el-dropdown-link">{{username}}<i class="el-icon-arrow-down el-icon--right"></i></span>
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item divided><a href="/login">退出</a></el-dropdown-item>
+                    <el-dropdown-item divided><a href="/TeachingAssistantSystem/login">退出</a></el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
         </el-menu-item>
@@ -53,7 +53,7 @@
     <div id="main">
         <el-col>
             <el-card shadow="hover">
-                <form action="/uploadvideo/save" method="post" enctype="multipart/form-data">
+                <form action="/TeachingAssistantSystem/uploadvideo/save" method="post" enctype="multipart/form-data">
                     <input type="file" name="file"/>
                     <br/>
                     <br>
@@ -186,9 +186,9 @@
 </body>
 
 
-<script type="text/javascript" th:src="@{../../lib/vue/vue.js}"></script>
-<script type="text/javascript" th:src="@{../../lib/element-ui/lib/index.js}"></script>
-<script type="text/javascript" th:src="@{../../lib/vue/vue-resource.js}"></script>
-<script type="text/javascript" th:src="@{../../lib/vue/vuex.min.js}"></script>
-<script type="text/javascript" th:src="@{../../teacher/uploadvideo/js/uploadvideo.js}"></script>
+<script type="text/javascript" th:src="@{../../TeachingAssistantSystem/lib/vue/vue.js}"></script>
+<script type="text/javascript" th:src="@{../../TeachingAssistantSystem/lib/element-ui/lib/index.js}"></script>
+<script type="text/javascript" th:src="@{../../TeachingAssistantSystem/lib/vue/vue-resource.js}"></script>
+<script type="text/javascript" th:src="@{../../TeachingAssistantSystem/lib/vue/vuex.min.js}"></script>
+<script type="text/javascript" th:src="@{../../TeachingAssistantSystem/teacher/uploadvideo/js/uploadvideo.js}"></script>
 </html>

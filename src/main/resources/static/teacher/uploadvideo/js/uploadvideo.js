@@ -78,7 +78,7 @@ var vm = new Vue({
 
         findAllVideos() {
             this.loadings();
-            this.$http.post('/video/findAllVideos',{
+            this.$http.post('/TeachingAssistantSystem/video/findAllVideos',{
                 cId: this.cId
             }).then(result => {
                 console.log(result);
@@ -102,7 +102,7 @@ var vm = new Vue({
             this.showEditor = true;
             this.editor = {}; //清空表单
             //查询当前id对应的数据
-            this.$http.post('/video/findByVId', {vId: id}).then(result => {
+            this.$http.post('/TeachingAssistantSystem/video/findByVId', {vId: id}).then(result => {
                 //this.editor = result.body[0];
                 console.log(result);
             console.log(result.data);
@@ -122,7 +122,7 @@ var vm = new Vue({
 
             console.log(this.editor)
             //调用更新数据的接口
-            this.$http.post('/video/update', {
+            this.$http.post('/TeachingAssistantSystem/video/update', {
                 vId: this.editor.vId,
                 vName: this.editor.vName
             }).then(result => {
@@ -171,7 +171,7 @@ var vm = new Vue({
                 type: 'warning',
                 center: true
             }).then(() => {
-                this.$http.post('/video/delete',{
+                this.$http.post('/TeachingAssistantSystem/video/delete',{
                 vId: ids
             }).then(result => {
                 if (result.body.success) {

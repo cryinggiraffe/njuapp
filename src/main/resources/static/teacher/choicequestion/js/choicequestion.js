@@ -67,7 +67,7 @@ var vm = new Vue({
 
         findAllChoiceQuestions(){
             this.loadings();
-            this.$http.post('/choicequestion/findAllChoiceQuestions',
+            this.$http.post('/TeachingAssistantSystem/choicequestion/findAllChoiceQuestions',
                 {
                     cId: this.cId
                 }).then(result => {
@@ -94,7 +94,7 @@ var vm = new Vue({
                     //关闭dialog
                     this.showSave = false;
                     //调用保存的接口
-                    this.$http.post('/choicequestion/create', {
+                    this.$http.post('/TeachingAssistantSystem/choicequestion/create', {
                         cId: this.cId,
                         cqContent: this.editor.cqContent,
                         optionA: this.editor.optionA,
@@ -161,7 +161,7 @@ var vm = new Vue({
             this.showEditor = true;
             this.editor = {}; //清空表单
             //查询当前id对应的数据
-            this.$http.post('/choicequestion/findByCqId',
+            this.$http.post('/TeachingAssistantSystem/choicequestion/findByCqId',
                 {
                     cqId: id
                 }).then(result => {
@@ -184,7 +184,7 @@ var vm = new Vue({
 
             console.log(this.editor)
             //调用更新数据的接口
-            this.$http.post('/choicequestion/update', {
+            this.$http.post('/TeachingAssistantSystem/choicequestion/update', {
                 cqId: this.editor.cqId,
                 cqContent: this.editor.cqContent,
                 optionA: this.editor.optionA,
@@ -238,7 +238,7 @@ var vm = new Vue({
                 type: 'warning',
                 center: true
             }).then(() => {
-                this.$http.post('/choicequestion/delete',{
+                this.$http.post('/TeachingAssistantSystem/choicequestion/delete',{
                 cqId: ids
             }).then(result => {
                 if (result.body.success) {

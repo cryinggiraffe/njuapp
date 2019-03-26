@@ -38,7 +38,7 @@ new Vue({
                 if (valid) {
                     this.loadings(); //加载动画
                     //提交表单
-                    this.$http.post('/web/login', {
+                    this.$http.post('/TeachingAssistantSystem/web/login', {
                         username: this.login.username,
                         password: this.login.password,
                         type: this.login.type
@@ -50,9 +50,9 @@ new Vue({
 
                         // this.$store.dispatch("token", this.login);
                         if (result.body.message == 'admin'){
-                            window.location.href = "/user";
+                            window.location.href = "/TeachingAssistantSystem/user";
                         }else{
-                            window.location.href = "/teacher"
+                            window.location.href = "/TeachingAssistantSystem/teacher"
                         }
                         this.loading.close(); //关闭动画加载
                     } else {

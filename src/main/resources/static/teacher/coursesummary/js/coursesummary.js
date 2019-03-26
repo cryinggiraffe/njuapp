@@ -59,7 +59,7 @@ var vm = new Vue({
 
         findAllCourseSummarys(){
             this.loadings();
-            this.$http.post('/coursesummary/findAllCourseSummarys',
+            this.$http.post('/TeachingAssistantSystem/coursesummary/findAllCourseSummarys',
                 {
                     cId: this.cId
                 }).then(result => {
@@ -86,7 +86,7 @@ var vm = new Vue({
                     //关闭dialog
                     this.showSave = false;
                     //调用保存的接口
-                    this.$http.post('/coursesummary/create', {
+                    this.$http.post('/TeachingAssistantSystem/coursesummary/create', {
                         cId: this.cId,
                         tId: this.username,
                         summary: this.editor.summary
@@ -149,7 +149,7 @@ var vm = new Vue({
             this.showEditor = true;
             this.editor = {}; //清空表单
             //查询当前id对应的数据
-            this.$http.post('/coursesummary/findByCsId',
+            this.$http.post('/TeachingAssistantSystem/coursesummary/findByCsId',
                 {
                     csId: id
                 }).then(result => {
@@ -172,7 +172,7 @@ var vm = new Vue({
 
             console.log(this.editor)
             //调用更新数据的接口
-            this.$http.post('/coursesummary/update', {
+            this.$http.post('/TeachingAssistantSystem/coursesummary/update', {
                 csId: this.editor.csId,
                 summary: this.editor.summary
             }).then(result => {
@@ -218,7 +218,7 @@ var vm = new Vue({
                 type: 'warning',
                 center: true
             }).then(() => {
-                this.$http.post('/coursesummary/delete',{
+                this.$http.post('/TeachingAssistantSystem/coursesummary/delete',{
                 csId: ids
             }).then(result => {
                 if (result.body.success) {

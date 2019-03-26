@@ -59,7 +59,7 @@ var vm = new Vue({
 
         findAllSimpleQuestions(){
             this.loadings();
-            this.$http.post('/simplequestion/findAllSimpleQuestions',
+            this.$http.post('/TeachingAssistantSystem/simplequestion/findAllSimpleQuestions',
                 {
                     cId: this.cId
                 }).then(result => {
@@ -86,7 +86,7 @@ var vm = new Vue({
                     //关闭dialog
                     this.showSave = false;
                     //调用保存的接口
-                    this.$http.post('/simplequestion/create', {
+                    this.$http.post('/TeachingAssistantSystem/simplequestion/create', {
                         cId: this.cId,
                         sqContent: this.editor.sqContent,
                         sqCorrectAnswer: this.editor.sqCorrectAnswer
@@ -149,7 +149,7 @@ var vm = new Vue({
             this.showEditor = true;
             this.editor = {}; //清空表单
             //查询当前id对应的数据
-            this.$http.post('/simplequestion/findBySqId',
+            this.$http.post('/TeachingAssistantSystem/simplequestion/findBySqId',
                 {
                     cqId: id
                 }).then(result => {
@@ -172,7 +172,7 @@ var vm = new Vue({
 
             console.log(this.editor)
             //调用更新数据的接口
-            this.$http.post('/simplequestion/update', {
+            this.$http.post('/TeachingAssistantSystem/simplequestion/update', {
                 sqId: this.editor.sqId,
                 sqContent: this.editor.sqContent,
                 sqCorrectAnswer: this.editor.sqCorrectAnswer
@@ -222,7 +222,7 @@ var vm = new Vue({
                 type: 'warning',
                 center: true
             }).then(() => {
-                this.$http.post('/simplequestion/delete',{
+                this.$http.post('/TeachingAssistantSystem/simplequestion/delete',{
                 sqId: ids
             }).then(result => {
                 if (result.body.success) {
@@ -257,7 +257,7 @@ var vm = new Vue({
 
         handle(id){
             sessionStorage.setItem("cId", id);
-            window.location.href = "/course";
+            window.location.href = "/TeachingAssistantSystem/course";
         },
 
 

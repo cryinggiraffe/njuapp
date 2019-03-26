@@ -68,7 +68,7 @@ var vm = new Vue({
 
         findAllCourses(){
             this.loadings();
-            this.$http.post('/teachcourse/findAllCourses',
+            this.$http.post('/TeachingAssistantSystem/teachcourse/findAllCourses',
                 {
                     tId: this.username
                 }).then(result => {
@@ -94,7 +94,7 @@ var vm = new Vue({
                     //关闭dialog
                     this.showSave = false;
                     //调用保存的接口
-                    this.$http.post('/teachcourse/create', {
+                    this.$http.post('/TeachingAssistantSystem/teachcourse/create', {
                         tId: this.username,
                         cName: this.saver.cName,
                         start: this.saver.start,
@@ -159,7 +159,7 @@ var vm = new Vue({
             this.showEditor = true;
             this.editor = {}; //清空表单
             //查询当前id对应的数据
-            this.$http.post('/teachcourse/findByCId',
+            this.$http.post('/TeachingAssistantSystem/teachcourse/findByCId',
                 {
                     cId: id
                 }).then(result => {
@@ -182,7 +182,7 @@ var vm = new Vue({
 
             console.log(this.editor)
             //调用更新数据的接口
-            this.$http.post('/teachcourse/update', {
+            this.$http.post('/TeachingAssistantSystem/teachcourse/update', {
                 cId: this.editor.cId,
                 cName: this.editor.cName,
                 token: this.editor.token
@@ -232,7 +232,7 @@ var vm = new Vue({
                 type: 'warning',
                 center: true
             }).then(() => {
-                this.$http.post('/teachcourse/delete',{
+                this.$http.post('/TeachingAssistantSystem/teachcourse/delete',{
                 cId: ids
             }).then(result => {
                 if (result.body.success) {
@@ -267,7 +267,7 @@ var vm = new Vue({
 
         handle(id){
             sessionStorage.setItem("cId", id);
-            window.location.href = "/course";
+            window.location.href = "/TeachingAssistantSystem/course";
         },
 
 

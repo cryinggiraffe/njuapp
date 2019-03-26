@@ -66,7 +66,7 @@ var vm = new Vue({
 
         findAllClassSchedules() {
             this.loadings();
-            this.$http.post('/classschedule/findAllClassSchedules').then(result => {
+            this.$http.post('/TeachingAssistantSystem/classschedule/findAllClassSchedules').then(result => {
                 console.log(result);
             this.classschedules = result.data;
             //this.pageConf.totalPage = result.body.total;
@@ -88,7 +88,7 @@ var vm = new Vue({
             this.showEditor = true;
             this.editor = {}; //清空表单
             //查询当前id对应的数据
-            this.$http.post('/classschedule/findByCsId', {csId: id}).then(result => {
+            this.$http.post('/TeachingAssistantSystem/classschedule/findByCsId', {csId: id}).then(result => {
                 //this.editor = result.body[0];
                 console.log(result);
             console.log(result.data);
@@ -108,7 +108,7 @@ var vm = new Vue({
 
             console.log(this.editor)
             //调用更新数据的接口
-            this.$http.post('/classschedule/update', {
+            this.$http.post('/TeachingAssistantSystem/classschedule/update', {
                 csId: this.editor.csId,
                 csName: this.editor.csName
             }).then(result => {
@@ -157,7 +157,7 @@ var vm = new Vue({
                 type: 'warning',
                 center: true
             }).then(() => {
-                this.$http.post('/classschedule/delete',{
+                this.$http.post('/TeachingAssistantSystem/classschedule/delete',{
                     csId: ids
             }).then(result => {
                     if (result.body.success) {

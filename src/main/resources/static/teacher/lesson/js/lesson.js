@@ -65,7 +65,7 @@ var vm = new Vue({
 
         findAllLessons(){
             this.loadings();
-            this.$http.post('/lesson/findAllLessons',
+            this.$http.post('/TeachingAssistantSystem/lesson/findAllLessons',
                 {
                     cId: this.cId
                 }).then(result => {
@@ -97,7 +97,7 @@ var vm = new Vue({
 
         updateReachedNumber(){
             this.loadings();
-            this.$http.post('/lesson/updateReachedNumber',
+            this.$http.post('/TeachingAssistantSystem/lesson/updateReachedNumber',
                 {
                     cId: this.cId
                 }).then(result => {
@@ -127,7 +127,7 @@ var vm = new Vue({
                     //var date_value=date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
                     var date_value = date.getTime();
                     //调用保存的接口
-                    this.$http.post('/lesson/create', {
+                    this.$http.post('/TeachingAssistantSystem/lesson/create', {
                         cId: this.cId,
                         lTime: date_value,
                         signCode: this.editor.signCode
@@ -190,7 +190,7 @@ var vm = new Vue({
             this.showEditor = true;
             this.editor = {}; //清空表单
             //查询当前id对应的数据
-            this.$http.post('/lesson/findByLId',
+            this.$http.post('/TeachingAssistantSystem/lesson/findByLId',
                 {
                     lId: id
                 }).then(result => {
@@ -213,7 +213,7 @@ var vm = new Vue({
 
             console.log(this.editor)
             //调用更新数据的接口
-            this.$http.post('/lesson/update', {
+            this.$http.post('/TeachingAssistantSystem/lesson/update', {
                 lId: this.editor.lId,
                 signCode: this.editor.signCode
             }).then(result => {
@@ -244,12 +244,12 @@ var vm = new Vue({
 
         handleComment(id){
             sessionStorage.setItem("lId", id);
-            window.location.href = "/lessoncommentrecord";
+            window.location.href = "/TeachingAssistantSystem/lessoncommentrecord";
         },
 
         handle(id){
             sessionStorage.setItem("lId", id);
-            window.location.href = "/absentlessonrecord";
+            window.location.href = "/TeachingAssistantSystem/absentlessonrecord";
         },
 
 

@@ -78,7 +78,7 @@ var vm = new Vue({
 
         findAllCoursewares() {
             this.loadings();
-            this.$http.post('/courseware/findAllCoursewares',{
+            this.$http.post('/TeachingAssistantSystem/courseware/findAllCoursewares',{
                 cId: this.cId
             }).then(result => {
                 console.log(result);
@@ -102,7 +102,7 @@ var vm = new Vue({
             this.showEditor = true;
             this.editor = {}; //清空表单
             //查询当前id对应的数据
-            this.$http.post('/courseware/findByCwId', {cwId: id}).then(result => {
+            this.$http.post('/TeachingAssistantSystem/courseware/findByCwId', {cwId: id}).then(result => {
                 //this.editor = result.body[0];
                 console.log(result);
             console.log(result.data);
@@ -122,7 +122,7 @@ var vm = new Vue({
 
             console.log(this.editor)
             //调用更新数据的接口
-            this.$http.post('/courseware/update', {
+            this.$http.post('/TeachingAssistantSystem/courseware/update', {
                 cwId: this.editor.cwId,
                 cwName: this.editor.cwName
             }).then(result => {
@@ -171,7 +171,7 @@ var vm = new Vue({
                 type: 'warning',
                 center: true
             }).then(() => {
-                this.$http.post('/courseware/delete',{
+                this.$http.post('/TeachingAssistantSystem/courseware/delete',{
                 cwId: ids
             }).then(result => {
                 if (result.body.success) {

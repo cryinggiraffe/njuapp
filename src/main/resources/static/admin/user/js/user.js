@@ -112,7 +112,7 @@ var vm = new Vue({
         */
         findAllUser() {
             this.loadings();
-            this.$http.post('/user/findAllUsers').then(result => {
+            this.$http.post('/TeachingAssistantSystem/user/findAllUsers').then(result => {
                 console.log(result);
                 this.users = result.data;
                 //this.pageConf.totalPage = result.body.total;
@@ -122,7 +122,7 @@ var vm = new Vue({
         //搜索
         search(){
             this.loadings();
-            this.$http.post('/user/findByUsername',
+            this.$http.post('/TeachingAssistantSystem/user/findByUsername',
                 {
                     username: this.searchEntity.username
                 }).then(result => {
@@ -158,7 +158,7 @@ var vm = new Vue({
 
             console.log(this.editor)
             //调用更新数据的接口
-            this.$http.post('/user/update', {
+            this.$http.post('/TeachingAssistantSystem/user/update', {
                 username: this.editor.username,
                 password: this.editor.password,
                 type: this.editor.type
@@ -196,7 +196,7 @@ var vm = new Vue({
                 center: true
             }).then(() => {
                 //调用删除的接口(这里必须将数据转换成JSON格式，不然接收不到值，并且后端要用@RequestBody注解标识)
-                this.$http.post('/user/delete', {
+                this.$http.post('/TeachingAssistantSystem/user/delete', {
                     id: ids
             }).then(result => {
                 if (result.body.success) {
@@ -245,7 +245,7 @@ var vm = new Vue({
                     //关闭dialog
                     this.showSave = false;
                     //调用保存的接口
-                    this.$http.post('/user/create', {
+                    this.$http.post('/TeachingAssistantSystem/user/create', {
                         username: this.editor.username,
                         password: this.editor.password,
                         type: this.editor.type
@@ -311,7 +311,7 @@ var vm = new Vue({
             this.showEditor = true;
             this.editor = {}; //清空表单
             //查询当前id对应的数据
-            this.$http.post('/user/findById', {id: id}).then(result => {
+            this.$http.post('/TeachingAssistantSystem/user/findById', {id: id}).then(result => {
                 //this.fileList.forEach(row => {
                 //row.url = result.body[0].image; //将图片的URL地址赋值给file-list展示出来
                 //});
