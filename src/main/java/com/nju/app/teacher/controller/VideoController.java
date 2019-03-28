@@ -81,8 +81,8 @@ public class VideoController {
         String url = "static/video/";
         //String path = request.getSession().getServletContext().getRealPath(url);
         //String path = ClassUtils.getDefaultClassLoader().getResource("").getPath()+url;
-
-        String path = "/root/njuapp/video/";
+        String path = "/Users/shahao/Downloads/nju/video/";
+        //String path = "/root/njuapp/video/";
         File filePath = new File(path);
         System.out.println("文件保存路径：" + filePath.getAbsolutePath());
 
