@@ -74,5 +74,81 @@ public class StudentHomeworkService {
         }
 
     }
+	
+    public ChoiceQuestionStatistic getChoiceQuestionStatistic(String hId) {
+        //得到所有questions
+        List<HomeworkQuestionRecord> questionRecords = homeworkQuestionRecordDao.findByHId(hId);
+        List<ChoiceQuestionRecord> choiceQuestionRecords = choiceQuestionRecordDao.findByHId(hId);
+        List<String> questions = new LinkedList<>();
+        for (HomeworkQuestionRecord h : questionRecords){
+            questions.add(h.getCqId());
+        }
+
+        List<StatisticContent> scs = new LinkedList<>();
+        StatisticContent sA = new StatisticContent();
+        StatisticContent sB = new StatisticContent();
+        StatisticContent sC = new StatisticContent();
+        StatisticContent sD = new StatisticContent();
+        List<Integer> dA = new LinkedList<>();
+        List<Integer> dB = new LinkedList<>();
+        List<Integer> dC = new LinkedList<>();
+        List<Integer> dD = new LinkedList<>();
+        sA.setName("A");
+        sA.setCategory("bar");
+        sB.setName("B");
+        sB.setCategory("bar");
+        sC.setName("C");
+        sC.setCategory("bar");
+        sD.setName("D");
+        sD.setCategory("bar");
+        int A = 0;
+        int B = 0;
+        int C = 0;
+        int D = 0;
+
+        for (String que : questions){
+            for (ChoiceQuestionRecord cqr : choiceQuestionRecords){
+                if (que.equals(cqr.getCqId())){
+                    if (cqr.getCqSelect().equals("A")){
+                        A++;
+                    }
+                    if (cqr.getCqSelect().equals("B")){
+                        B++;
+                    }
+                    if (cqr.getCqSelect().equals("C")){
+                        C++;
+                    }
+                    if (cqr.getCqSelect().equals("D")){
+                        D++;
+                    }
+                }
+            }
+            dA.add(A);
+            dB.add(B);
+            dC.add(C);
+            dD.add(D);
+            A = 0;
+            B = 0;
+            C = 0;
+            D = 0;
+        }
+
+        sA.setData(dA);
+        sB.setData(dB);
+        sC.setData(dC);
+        sD.setData(dD);
+
+        scs.add(sA);
+        scs.add(sB);
+        scs.add(sC);
+        scs.add(sD);
+        ChoiceQuestionStatistic result = new ChoiceQuestionStatistic();
+        result.setCquestion(questions);
+        result.setStatisticContents(scs);
+
+        System.out.println(result);
+        return result;
+
+    }
 
 }
