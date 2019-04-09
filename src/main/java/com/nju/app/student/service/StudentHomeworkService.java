@@ -5,6 +5,8 @@ import com.nju.app.dao.ChoiceQuestionRecordDao;
 import com.nju.app.dao.HomeworkDao;
 import com.nju.app.dao.HomeworkQuestionRecordDao;
 import com.nju.app.entities.*;
+import com.nju.app.student.entities.ChoiceQuestionStatistic;
+import com.nju.app.student.entities.StatisticContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
