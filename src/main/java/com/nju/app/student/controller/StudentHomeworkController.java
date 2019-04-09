@@ -60,4 +60,10 @@ public class StudentHomeworkController {
 
 
     }
+	
+    @ResponseBody
+    @RequestMapping("/question/findChoiceQuestionStatistic")
+    public ChoiceQuestionStatistic getChoiceQuestionStatistic(@RequestParam("hId") String hId) {
+        return studentHomeworkService.getChoiceQuestionStatistic(hId);
+    }
 }

@@ -8,4 +8,6 @@ import java.util.List;
 public interface ChoiceQuestionRecordDao extends JpaRepository<ChoiceQuestionRecord, Integer>{
 
     List<ChoiceQuestionRecord> findBySIdAndHId(String sId, String hId);
+	
+	List<ChoiceQuestionRecord> findByHId(String hId);
 }
