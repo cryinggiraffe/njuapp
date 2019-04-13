@@ -137,6 +137,11 @@ public class UserController {
         }
     }
 
+
+    public void register(){
+
+    }
+
     @GetMapping("/user")
     public String user(){
         return "admin/user";
