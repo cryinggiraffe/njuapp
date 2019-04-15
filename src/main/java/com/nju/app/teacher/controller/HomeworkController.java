@@ -38,16 +38,32 @@ public class HomeworkController {
         return list;
     }
 
+
     @ResponseBody
-    @RequestMapping(value = "/getHomeworkDetail")
-    //获取作业中选择题的cqId
-    public List<String> getHomeworkDetail(@RequestParam(value = "h_id")String hId){
-        List<String> res = null;
-        List<HomeworkQuestionRecord> list = homeworkQuestionRecordDao.findByHId(hId);
+    @RequestMapping(value = "/republishHomework")
+    public Result republishHomework(@RequestParam(value = "c_id") String cId,
+                                  @RequestParam(value = "h_id") String hId,
+                                  @RequestParam(value = "h_title") String hTitle,
+                                  @RequestParam(value = "release_time") String date){
+        Homework temp = new Homework();
+        List<Homework> list = homeworkDao.findByCId(cId);
         for(int i=0;i<list.size();i++){
-            res.add(list.get(i).getCqId());
+            temp = list.get(i);
+            if(temp.gethId() == hId){
+                Homework homework = temp;
+                //homework.setcId(cId);
+                //homework.sethId(hId);
+                homework.sethTitle(hTitle);
+                homework.setReleasetime(strToDate(date));
+                homeworkDao.saveAndFlush(homework);
+                return new Result(true,"更新成功");
+            }
+            else{
+                return new Result(false,"更新失败");
+            }
         }
-        return res;
+
+        return new Result(false,"发生未知错误");
     }
 
     @ResponseBody
