@@ -111,6 +111,7 @@ public class StudentSelectCourseService {
                 selectCourseRecord.setcId(cId);
                 selectCourseRecord.setsId(sId);
                 selectCourseRecord.setIsSelected(1);
+                selectCourseRecord.setScore(0);
             }
             try{
                 selectCourseRecordDao.saveAndFlush(selectCourseRecord);

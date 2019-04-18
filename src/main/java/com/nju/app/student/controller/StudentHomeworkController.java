@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.nju.app.entities.ChoiceQuestion;
 import com.nju.app.entities.Homework;
 import com.nju.app.entities.Result;
+import com.nju.app.student.entities.ChoiceQuestionStatistic;
 import com.nju.app.student.service.StudentHomeworkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
