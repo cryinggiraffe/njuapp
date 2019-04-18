@@ -80,9 +80,14 @@ public class StudentHomeworkService {
         List<HomeworkQuestionRecord> questionRecords = homeworkQuestionRecordDao.findByHId(hId);
         List<ChoiceQuestionRecord> choiceQuestionRecords = choiceQuestionRecordDao.findByHId(hId);
         List<String> questions = new LinkedList<>();
+		List<String> quest = new LinkedList<>();
+		int i = 1;
         for (HomeworkQuestionRecord h : questionRecords){
             questions.add(h.getCqId());
+			quest.add("题目" + i);
+			i++;
         }
+		i = 1;
 
         List<StatisticContent> scs = new LinkedList<>();
         StatisticContent sA = new StatisticContent();
@@ -143,7 +148,7 @@ public class StudentHomeworkService {
         scs.add(sC);
         scs.add(sD);
         ChoiceQuestionStatistic result = new ChoiceQuestionStatistic();
-        result.setCquestion(questions);
+        result.setCquestion(quest);
         result.setStatisticContents(scs);
 
         System.out.println(result);
