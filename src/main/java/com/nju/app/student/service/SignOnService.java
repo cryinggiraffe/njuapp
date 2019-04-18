@@ -31,7 +31,7 @@ public class SignOnService {
         List<Lesson> signOn_list = new ArrayList<>();
         for (Lesson lesson : lessons){
 
-            if ((lesson.getStart().getTime() <= date.getTime()) && (lesson.getEnd().getTime() > date.getTime()) && lesson.getSignCode().length() > 0){
+            if ((lesson.getStart().getTime() <= date.getTime()) && (lesson.getEnd().getTime() > date.getTime())){
                 signOn_list.add(lesson);
             }
         }
