@@ -4,12 +4,10 @@ import com.nju.app.dao.*;
 import com.nju.app.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -39,15 +37,56 @@ public class HomeworkController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/getHomeworkDetail")
-    //获取作业中选择题的cqId
-    public List<String> getHomeworkDetail(@RequestParam(value = "h_id")String hId){
-        List<String> res = null;
-        List<HomeworkQuestionRecord> list = homeworkQuestionRecordDao.findByHId(hId);
-        for(int i=0;i<list.size();i++){
-            res.add(list.get(i).getCqId());
+    @RequestMapping(value = "/getChoiceQuestions")
+    public String getQuestions(@RequestParam(value = "h_id") String hId){
+        List<HomeworkQuestionRecord> recordList = homeworkQuestionRecordDao.findByHId(hId);
+        List<String> questionList =  new ArrayList<String>();
+        for(int j=0;j<recordList.size();j++){
+            questionList.add(recordList.get(j).getCqId());
         }
-        return res;
+        return String.join(",",questionList);
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/republishHomework")
+    public Result republishHomework(@RequestParam(value = "c_id") String cId,
+                                  @RequestParam(value = "h_id") String hId,
+                                  @RequestParam(value = "h_title") String hTitle,
+                                  @RequestParam(value = "release_time") String date,
+                                    @RequestParam(value = "selected") String selected){
+        Homework homework = new Homework();
+        Homework temp = new Homework();
+        List<Homework> list = homeworkDao.findByCId(cId);
+
+        for(int i=0;i<list.size();i++){
+            temp = list.get(i);
+
+            if(temp.gethId().equals(hId)){
+                homework = temp;
+                homework.setcId(cId);
+                homework.sethId(hId);
+                homework.sethTitle(hTitle);
+                homework.setReleasetime(strToDate(date));
+                homeworkDao.save(homework);
+
+                List<HomeworkQuestionRecord> records = homeworkQuestionRecordDao.findByHId(hId);
+                for(int l=0;l<records.size();l++){
+                    homeworkQuestionRecordDao.delete(records.get(l));
+                }
+
+                String[] sqId = selected.split("/");
+                for(int j = 0;j<sqId.length;j++){
+                    HomeworkQuestionRecord homeworkQuestionRecord = new HomeworkQuestionRecord();
+                    homeworkQuestionRecord.setCqId(String.valueOf(sqId[j]));
+                    homeworkQuestionRecord.sethId(hId);
+                    homeworkQuestionRecordDao.save(homeworkQuestionRecord);
+                }
+
+                return new Result(true,"更新成功");
+            }
+        }
+        return new Result(false,"更新失败");
     }
 
     @ResponseBody
