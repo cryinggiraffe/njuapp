@@ -8,5 +8,4 @@ import java.util.List;
 public interface HomeworkDao extends JpaRepository<Homework, Integer>{
 
     List<Homework> findByCId(String cId);
-
 }
