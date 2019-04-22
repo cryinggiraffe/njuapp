@@ -29,7 +29,7 @@ public class StudentSelectCourseController {
         return studentSelectCourseService.findAllCourses(sId);
     }
 
-
+    //选课
     @ResponseBody
     @RequestMapping("/selectCourse")
     public Result selectCourse(@RequestParam("cId") String cId,
