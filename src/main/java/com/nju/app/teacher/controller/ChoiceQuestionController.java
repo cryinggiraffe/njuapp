@@ -51,6 +51,7 @@ public class ChoiceQuestionController {
         ChoiceQuestion choiceQuestion = new ChoiceQuestion();
 
         String cqId = cId + GetUUID.getUUID();
+        choiceQuestion.setcId(cId);
         choiceQuestion.setCqId(cqId);
         choiceQuestion.setCqContent(cqContent);
         choiceQuestion.setOptionA(optionA);

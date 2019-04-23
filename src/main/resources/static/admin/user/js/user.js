@@ -18,6 +18,21 @@ var vm = new Vue({
                 type: '',
             }],
 
+            student: [{
+                s_id:'',
+                s_name:'',
+                sex:'',
+            }],
+            teacher: [{
+                t_id:'',
+                t_name:'',
+                sex:'',
+            }],
+            //添加用户详细信息表
+            infor: {
+                s_name:'',
+                sex:'',
+            },
             //编辑表
             editor: {
                 username: '',
@@ -38,6 +53,8 @@ var vm = new Vue({
             showSave: false,
             //编辑dialog
             showEditor: false,
+            //添加详细信息dialog
+            showInfo: false,
 
             //条件查询单独封装的对象
             searchEntity: {
@@ -49,6 +66,9 @@ var vm = new Vue({
             selectIds: [], //被checkbox选择的id值，用于批量删除
             count: 0, //tag栏，此项那是checkbox选择了几行
             username: '',
+            type: '',
+
+            id:'',
             /*
             //分页选项
             pageConf: {
@@ -358,6 +378,96 @@ var vm = new Vue({
                     duration: 6000
                 })
             }
+        },
+        
+        addInfo(id){
+            this.showInfo = true;
+            this.infor = {};
+            console.log(id);
+            this.$http.post('/TeachingAssistantSystem/user/findById', {id: id}).then(result => {
+                console.log(result);
+                this.type=result.body.type;
+                this.id = result.body.username;
+                console.log(result.body.username);
+                this.$refs['infor'].resetFields();
+            });
+        },
+
+        save(infor){
+            console.log(this.infor.sex);
+            console.log(this.id);
+            this.$refs[infor].validate((valid) => {
+                if(valid){
+                    this.showInfo = false;
+                    if(this.type=="student"){
+                        console.log("create student");
+                        this.$http.post('/TeachingAssistantSystem/student/create', {
+                            s_id: this.id,
+                            s_name: this.infor.s_name,
+                            sex: this.infor.sex
+                        }).then(result => {
+                            if (result.body.success) {
+                                //保存成功
+                                this.$message({
+                                    type: 'success',
+                                    message: result.body.message,
+                                    duration: 6000
+                                });
+                            } else {
+                                //保存失败
+                                this.$emit(
+                                    'save',
+                                    this.$message({
+                                        type: 'warning',
+                                        message: result.body.message,
+                                        duration: 6000
+                                    }),
+                                );
+                                console.log('fail');
+                            }
+                        });
+                    }
+                    else if(this.type=="teacher"){
+                        this.$http.post('/TeachingAssistantSystem/teacher/create', {
+                            t_id: this.id,
+                            t_name: this.infor.s_name,
+                            sex: this.infor.sex
+                        }).then(result => {
+                            if (result.body.success) {
+                            //保存成功
+                            this.$message({
+                                type: 'success',
+                                message: result.body.message,
+                                duration: 6000
+                            });
+
+                        } else {
+                            //保存失败
+                            this.$emit(
+                                'save',
+                                this.$message({
+                                    type: 'warning',
+                                    message: result.body.message,
+                                    duration: 6000
+                                }),
+                            );
+                        }
+                    });
+                    }
+                }
+                else{
+                    this.$emit(
+                        'save',
+                        this.$message({
+                            message: '输入信息有误！',
+                            type: 'warning',
+                            duration: 6000
+                        }),
+                    );
+                    return false;
+                }
+            });
+
         },
         //删除按钮
         handleDelete(id) {
