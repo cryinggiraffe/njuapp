@@ -32,11 +32,11 @@ public class StudentAppointmentController {
         return  studentAppointmentService.apoint(aId, sId);
     }
     
-    @ResponseBody
-    @RequestMapping("/appointment/findAppointed")
-    public List<StudentAppointment> findAppointed(@RequestParam("sId") String sId){
-        return studentAppointmentService.findAppointed(sId);
-    }
+//    @ResponseBody
+//    @RequestMapping("/appointment/findAppointed")
+//    public List<StudentAppointment> findAppointed(@RequestParam("sId") String sId){
+//        return studentAppointmentService.findAppointed(sId);
+//    }
 
     @ResponseBody
     @RequestMapping("/apppintment/cancel")
