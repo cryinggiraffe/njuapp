@@ -17,16 +17,18 @@ public class LessonLocation
 
     private String latitude;
     private String longitude;
+    private String radius;
 
     public LessonLocation() {
     }
 
-    public LessonLocation(String cId, String lId, String lName, String latitude, String longitude) {
+    public LessonLocation(String cId, String lId, String lName, String latitude, String longitude, String radius) {
         this.cId = cId;
         this.lId = lId;
         this.lName = lName;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.radius = radius;
     }
 
     public Integer getId() {
@@ -77,6 +79,14 @@ public class LessonLocation
         this.longitude = longitude;
     }
 
+    public String getRadius() {
+        return radius;
+    }
+
+    public void setRadius(String radius) {
+        this.radius = radius;
+    }
+
     @Override
     public String toString() {
         return "LessonLocation{" +
@@ -86,6 +96,7 @@ public class LessonLocation
                 ", lName='" + lName + '\'' +
                 ", latitude='" + latitude + '\'' +
                 ", longitude='" + longitude + '\'' +
+                ", radius=" + radius +
                 '}';
     }
 }
