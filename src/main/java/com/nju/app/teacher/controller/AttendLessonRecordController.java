@@ -73,7 +73,7 @@ public class AttendLessonRecordController {
             attendLessonRecordResult.setlId(attendLessonRecord.getlId());
             attendLessonRecordResult.setsId(attendLessonRecord.getsId());
             attendLessonRecordResult.setsName(studentDao.findBySId(attendLessonRecord.getsId()).getsName());
-            //attendLessonRecordResult.setAlTime(lessonDao.findByLId(attendLessonRecord.getlId()).getlTime());
+            attendLessonRecordResult.setAlTime(lessonDao.findByLId(attendLessonRecord.getlId()).getlTime().toString());
 
             attendLessonRecordResults.add(attendLessonRecordResult);
         }

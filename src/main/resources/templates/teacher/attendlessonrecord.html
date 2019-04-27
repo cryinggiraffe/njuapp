@@ -54,6 +54,25 @@
         <el-col>
             <el-card shadow="hover">
 
+                <!-- 搜索框 -->
+                <el-form :inline="true" :model="searchEntity" class="demo-form-inline">
+                    <el-form-item label="学生姓名">
+                        <el-input v-model="searchEntity.username" placeholder="学生姓名"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button
+                                type="primary"
+                                icon="el-icon-search"
+                                @click="search">查询
+                        </el-button>
+                        <el-button
+                                icon="el-icon-delete"
+                                @click="searchEntity={}"
+                                type="primary" plain>清空
+                        </el-button>
+                    </el-form-item>
+                </el-form>
+
                 <!-- 功能按钮 -->
                 <div>
                     <span class="el-tag avue-tip">
