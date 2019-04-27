@@ -28,6 +28,12 @@ var vm = new Vue({
 
             */
 
+            //条件查询单独封装的对象
+            searchEntity: {
+                sName: ''
+            },
+
+
             multipleSelection: [],
             selectIds: [],
             //添加dialog
