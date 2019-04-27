@@ -1,3 +1,4 @@
+<!--某堂课的所有的到课记录-->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -54,6 +55,25 @@
         <el-col>
             <el-card shadow="hover">
 
+                <!-- 搜索框 -->
+                <el-form :inline="true" :model="searchEntity" class="demo-form-inline">
+                    <el-form-item label="学号">
+                        <el-input v-model="searchEntity.sId" placeholder="学号"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button
+                                type="primary"
+                                icon="el-icon-search"
+                                @click="search">查询
+                        </el-button>
+                        <el-button
+                                icon="el-icon-delete"
+                                @click="searchEntity={}"
+                                type="primary" plain>清空
+                        </el-button>
+                    </el-form-item>
+                </el-form>
+
                 <!-- 功能按钮 -->
                 <div>
                     <span class="el-tag avue-tip">
@@ -69,8 +89,8 @@
 
                 <!-- 列表 -->
                 <el-table
-                        ref="students"
-                        :data="students"
+                        ref="attendlessonrecords"
+                        :data="attendlessonrecords"
                         border
                         tooltip-effect="dark"
                         style="width: 100%"
@@ -97,8 +117,8 @@
                     </el-table-column>
                     <el-table-column
                             align="center"
-                            prop="sex"
-                            label="性别"
+                            prop="alTime"
+                            label="上课时间"
                             show-overflow-tooltip>
                     </el-table-column>
                 </el-table>
@@ -133,5 +153,5 @@
 <script type="text/javascript" th:src="@{../../TeachingAssistantSystem/lib/element-ui/lib/index.js}"></script>
 <script type="text/javascript" th:src="@{../../TeachingAssistantSystem/lib/vue/vue-resource.js}"></script>
 <script type="text/javascript" th:src="@{../../TeachingAssistantSystem/lib/vue/vuex.min.js}"></script>
-<script type="text/javascript" th:src="@{../../TeachingAssistantSystem/teacher/absentlessonrecord/js/absentlessonrecord.js}"></script>
+<script type="text/javascript" th:src="@{../../TeachingAssistantSystem/teacher/attendlessonstudent/js/attendlessonstudent.js}"></script>
 </html>

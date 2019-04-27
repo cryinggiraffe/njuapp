@@ -242,14 +242,14 @@ var vm = new Vue({
         })
         },
 
-        handleComment(id){
+        handleList(id){
             sessionStorage.setItem("lId", id);
-            window.location.href = "/TeachingAssistantSystem/lessoncommentrecord";
+            window.location.href = "/TeachingAssistantSystem/attendlessonstudent";
         },
 
         handle(id){
             sessionStorage.setItem("lId", id);
-            window.location.href = "/TeachingAssistantSystem/absentlessonrecord";
+            window.location.href = "/TeachingAssistantSystem/absentlessonstudent";
         },
 
 

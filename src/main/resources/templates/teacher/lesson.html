@@ -85,6 +85,7 @@
                     <el-table-column
                             prop="lId"
                             align="center"
+                            v-if="hideRow"
                             sortable
                             fixed
                             label="课堂ID"
@@ -146,7 +147,7 @@
                             <el-button
                                     size="mini"
                                     type="danger"
-                                    @click="handleComment(scope.row.lId)">课堂反馈
+                                    @click="handleList(scope.row.lId)">到课学生名单
                             </el-button>
                             <el-button
                                     size="mini"

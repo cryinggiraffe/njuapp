@@ -8,16 +8,16 @@ var vm = new Vue({
     data() {
         return {
             loading: {},
-            activeIndex: '4', //默认激活
+            activeIndex: '6', //默认激活
             username: '',
             cId: '',
+            lId: '',
             count: 0,
 
-            attendlessonrecords: [{
-                lId : '',
+            students: [{
                 sId: '',
                 sName: '',
-                alTime: ''
+                sex: ''
             }],
 
             /*
@@ -27,12 +27,6 @@ var vm = new Vue({
             },
 
             */
-
-            //条件查询单独封装的对象
-            searchEntity: {
-                sId: ''
-            },
-
 
             multipleSelection: [],
             selectIds: [],
@@ -61,39 +55,23 @@ var vm = new Vue({
 
             this.username = sessionStorage.getItem("username");
             this.cId = sessionStorage.getItem("cId");
+            this.lId = sessionStorage.getItem("lId");
         },
 
         //刷新列表
         reloadList() {
-            this.findAllAttendLessonRecordResults();
+            this.findAllAbsentLessonRecords();
         },
 
-        findAllAttendLessonRecordResults(){
+        findAllAbsentLessonRecords(){
             this.loadings();
-            this.$http.post('/TeachingAssistantSystem/attendlessonrecord/findAllAttendLessonRecordResults',
-                {
-                    cId: this.cId
-                }).then(result => {
-                console.log(result);
-            this.attendlessonrecords = result.data;
-            this.loading.close(); //数据更新成功就手动关闭动画
-        });
-        },
-
-        //搜索
-        search(){
-            this.loadings();
-            this.$http.post('/TeachingAssistantSystem/attendlessonrecord/findAttendLessonRecordResultsBySId',
+            this.$http.post('/TeachingAssistantSystem/absentlessonrecord/findAllAbsentLessonStudents',
                 {
                     cId: this.cId,
-                    sId: this.searchEntity.sId
+                    lId: this.lId
                 }).then(result => {
-                console.log(result.data);
-            this.attendlessonrecords = [];
-            //this.attendlessonrecords.push(result.data);
-
-            this.attendlessonrecords = result.data;
-            //this.pageConf.totalPage = result.body.total;
+                console.log(result);
+            this.students = result.data;
             this.loading.close(); //数据更新成功就手动关闭动画
         });
         },
@@ -104,7 +82,7 @@ var vm = new Vue({
         },
         //清空已选择的
         clearSelect() {
-            this.$refs.coursecommentrecords.clearSelection();
+            this.$refs.students.clearSelection();
         },
 
 
@@ -114,7 +92,7 @@ var vm = new Vue({
     // 生命周期函数
     created() {
         //this.search(this.pageConf.pageCode, this.pageConf.pageSize);
-        this.findAllAttendLessonRecordResults();
+        this.findAllAbsentLessonRecords();
         this.loadings(); //加载动画
     },
 
