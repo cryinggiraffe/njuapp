@@ -56,8 +56,8 @@
 
                 <!-- 搜索框 -->
                 <el-form :inline="true" :model="searchEntity" class="demo-form-inline">
-                    <el-form-item label="学生姓名">
-                        <el-input v-model="searchEntity.username" placeholder="学生姓名"></el-input>
+                    <el-form-item label="学号">
+                        <el-input v-model="searchEntity.sId" placeholder="学号"></el-input>
                     </el-form-item>
                     <el-form-item>
                         <el-button
@@ -99,6 +99,13 @@
                             align="center"
                             type="selection"
                             width="55">
+                    </el-table-column>
+                    <el-table-column
+                            align="center"
+                            prop="sId"
+                            sortable
+                            label="学号"
+                            width="120">
                     </el-table-column>
                     <el-table-column
                             align="center"

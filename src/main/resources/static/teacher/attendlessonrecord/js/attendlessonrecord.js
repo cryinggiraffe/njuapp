@@ -30,7 +30,7 @@ var vm = new Vue({
 
             //条件查询单独封装的对象
             searchEntity: {
-                sName: ''
+                sId: ''
             },
 
 
@@ -76,6 +76,24 @@ var vm = new Vue({
                 }).then(result => {
                 console.log(result);
             this.attendlessonrecords = result.data;
+            this.loading.close(); //数据更新成功就手动关闭动画
+        });
+        },
+
+        //搜索
+        search(){
+            this.loadings();
+            this.$http.post('/TeachingAssistantSystem/attendlessonrecord/findAttendLessonRecordResultsBySId',
+                {
+                    cId: this.cId,
+                    sId: this.searchEntity.sId
+                }).then(result => {
+                console.log(result.data);
+            this.attendlessonrecords = [];
+            //this.attendlessonrecords.push(result.data);
+
+            this.attendlessonrecords = result.data;
+            //this.pageConf.totalPage = result.body.total;
             this.loading.close(); //数据更新成功就手动关闭动画
         });
         },
