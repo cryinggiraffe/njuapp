@@ -20,15 +20,22 @@ import static org.apache.coyote.http11.Constants.a;
 @Controller
 public class AttendLessonRecordController {
 
-    //学生到课情况
+    //所有学生到课情况
     @GetMapping("/attendlessonrecord")
     public String index1(){
         return "teacher/attendlessonrecord";
     }
 
-    @GetMapping("/absentlessonrecord")
+    //某堂课的到课学生名单
+    @GetMapping("/attendlessonstudent")
     public String index2(){
-        return "teacher/absentlessonrecord";
+        return "teacher/attendlessonstudent";
+    }
+
+    //缺课学生名单
+    @GetMapping("/absentlessonstudent")
+    public String index3(){
+        return "teacher/absentlessonstudent";
     }
 
     @Autowired
@@ -43,13 +50,38 @@ public class AttendLessonRecordController {
     @Autowired
     StudentDao studentDao;
 
-    //当前课程来的人
+    //当前课程到课学生
     @ResponseBody
     @RequestMapping("/attendlessonrecord/findAllAttendLessonRecords")
     public List<AttendLessonRecord> findAllAttendLessonRecords(@RequestParam("lId") String lId){
 
         return attendLessonRecordDao.findByLId(lId);
     }
+
+    //当前课程到课学生
+    @ResponseBody
+    @RequestMapping("/attendlessonrecord/findAllAttendLessonStudents")
+    public List<AttendLessonRecordResult> findAttendLessonRecordByLId(@RequestParam("lId") String lId){
+
+        List<AttendLessonRecord> attendLessonRecords = attendLessonRecordDao.findByLId(lId);
+
+        List<AttendLessonRecordResult> attendLessonRecordResults = new ArrayList<>();
+
+        for (AttendLessonRecord attendLessonRecord : attendLessonRecords){
+
+            AttendLessonRecordResult attendLessonRecordResult = new AttendLessonRecordResult();
+
+            attendLessonRecordResult.setsId(attendLessonRecord.getsId());
+            attendLessonRecordResult.setsName(studentDao.findBySId(attendLessonRecord.getsId()).getsName());
+            attendLessonRecordResult.setAlTime(lessonDao.findByLId(attendLessonRecord.getlId()).getlTime().toString());
+
+            attendLessonRecordResults.add(attendLessonRecordResult);
+        }
+
+        return attendLessonRecordResults;
+    }
+
+
 
     @ResponseBody
     @RequestMapping("/attendlessonrecord/findAllAttendLessonRecordResults")
@@ -119,7 +151,7 @@ public class AttendLessonRecordController {
 
     //缺课名单
     @ResponseBody
-    @RequestMapping("/absentlessonrecord/findAllAbsentLessonRecords")
+    @RequestMapping("/absentlessonrecord/findAllAbsentLessonStudents")
     public List<Student> findAllAbsentLessonRecords(@RequestParam("cId") String cId,
                                                     @RequestParam("lId") String lId){
 
