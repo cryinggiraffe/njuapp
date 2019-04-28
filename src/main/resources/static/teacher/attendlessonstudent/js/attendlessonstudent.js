@@ -85,9 +85,9 @@ var vm = new Vue({
         //搜索
         search(){
             this.loadings();
-            this.$http.post('/TeachingAssistantSystem/attendlessonrecord/findAttendLessonRecordResultsBySId',
+            this.$http.post('/TeachingAssistantSystem/attendlessonrecord/findAttendLessonRecordResultBySId',
                 {
-                    cId: this.cId,
+                    lId: this.lId,
                     sId: this.searchEntity.sId
                 }).then(result => {
                 console.log(result.data);
