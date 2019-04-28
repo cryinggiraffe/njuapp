@@ -50,7 +50,7 @@ public class AttendLessonRecordController {
     @Autowired
     StudentDao studentDao;
 
-    //当前课程到课学生
+    //当前课程到课记录
     @ResponseBody
     @RequestMapping("/attendlessonrecord/findAllAttendLessonRecords")
     public List<AttendLessonRecord> findAllAttendLessonRecords(@RequestParam("lId") String lId){
@@ -71,6 +71,7 @@ public class AttendLessonRecordController {
 
             AttendLessonRecordResult attendLessonRecordResult = new AttendLessonRecordResult();
 
+            attendLessonRecordResult.setlId(lId);
             attendLessonRecordResult.setsId(attendLessonRecord.getsId());
             attendLessonRecordResult.setsName(studentDao.findBySId(attendLessonRecord.getsId()).getsName());
             attendLessonRecordResult.setAlTime(lessonDao.findByLId(attendLessonRecord.getlId()).getlTime().toString());
@@ -79,6 +80,24 @@ public class AttendLessonRecordController {
         }
 
         return attendLessonRecordResults;
+    }
+
+    //查找某堂课的某个学生
+    @ResponseBody
+    @RequestMapping("/attendlessonrecord/findAttendLessonRecordResultBySId")
+    public AttendLessonRecordResult findAttendLessonRecordBySId(@RequestParam("lId") String lId,
+                                                                @RequestParam("sId") String sId){
+
+        AttendLessonRecord attendLessonRecord = attendLessonRecordDao.findBySIdAndLId(sId,lId);
+
+        AttendLessonRecordResult attendLessonRecordResult = new AttendLessonRecordResult();
+
+        attendLessonRecordResult.setlId(lId);
+        attendLessonRecordResult.setsId(attendLessonRecord.getsId());
+        attendLessonRecordResult.setsName(studentDao.findBySId(attendLessonRecord.getsId()).getsName());
+        attendLessonRecordResult.setAlTime(lessonDao.findByLId(attendLessonRecord.getlId()).getlTime().toString());
+
+        return attendLessonRecordResult;
     }
 
 

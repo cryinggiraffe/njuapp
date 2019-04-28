@@ -85,16 +85,16 @@ var vm = new Vue({
         //搜索
         search(){
             this.loadings();
-            this.$http.post('/TeachingAssistantSystem/attendlessonrecord/findAttendLessonRecordResultsBySId',
+            this.$http.post('/TeachingAssistantSystem/attendlessonrecord/findAttendLessonRecordResultBySId',
                 {
-                    cId: this.cId,
+                    lId: this.lId,
                     sId: this.searchEntity.sId
                 }).then(result => {
                 console.log(result.data);
             this.attendlessonrecords = [];
             //this.attendlessonrecords.push(result.data);
 
-            this.attendlessonrecords = result.data;
+            athis.attendlessonrecords = result.data;
             //this.pageConf.totalPage = result.body.total;
             this.loading.close(); //数据更新成功就手动关闭动画
         });
