@@ -94,7 +94,7 @@ var vm = new Vue({
             this.attendlessonrecords = [];
             //this.attendlessonrecords.push(result.data);
 
-            this.attendlessonrecords = result.data;
+            athis.attendlessonrecords = result.data;
             //this.pageConf.totalPage = result.body.total;
             this.loading.close(); //数据更新成功就手动关闭动画
         });
