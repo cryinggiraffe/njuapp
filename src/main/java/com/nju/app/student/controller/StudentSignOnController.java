@@ -31,5 +31,6 @@ public class StudentSignOnController {
                          @RequestParam("signCode") String signCode){
 
         return signOnService.signOn(sId,lId,signCode);
+        //return signOnService.signOn2(sId,lId,signCode);
     }
 }

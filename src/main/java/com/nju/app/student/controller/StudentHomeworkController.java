@@ -51,7 +51,9 @@ public class StudentHomeworkController {
 
             try {
                 for(String cqId : resultMap.keySet()){
-                    studentHomeworkService.seleceChoiceQuestion(hId, sId, cqId, resultMap.get(cqId));
+					for(int i = 0; i < resultMap.get(cqId).length(); i++) {
+						studentHomeworkService.seleceChoiceQuestion(hId, sId, cqId, resultMap.get(cqId).substring(i, i+1));
+					}                  
                 }
             } catch (Exception e) {
                 return new Result(false, "未知错误");

@@ -78,7 +78,7 @@ public class CoursewareController {
     @RequestMapping("uploadcourseware/save")
     public String upload(@RequestParam("file") MultipartFile file, HttpServletRequest request, Model model){
 
-        String url = "static/courseware/";
+        //String url = "static/courseware/";
         //String path = request.getSession().getServletContext().getRealPath(url);
         //String path = ClassUtils.getDefaultClassLoader().getResource("").getPath()+url;
 

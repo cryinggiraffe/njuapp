@@ -133,8 +133,19 @@ public class StudentSelectCourseService {
 
         CourseScoreAndReview courseScoreAndReview = new CourseScoreAndReview();
 
-        courseScoreAndReview.setGrade(selectCourseRecord.getScore());
-        courseScoreAndReview.setResult(courseReviewRecord.getResult());
+
+        if (selectCourseRecord != null){
+            courseScoreAndReview.setGrade(selectCourseRecord.getScore());
+        }else {
+            courseScoreAndReview.setGrade(0);
+        }
+
+        if (courseReviewRecord != null){
+            courseScoreAndReview.setResult(courseReviewRecord.getResult());
+        }else {
+            courseScoreAndReview.setResult("");
+        }
+
 
         return courseScoreAndReview;
     }

@@ -29,6 +29,24 @@ public class StudentAppointmentService {
 
     @Autowired
     TeacherDao teacherDao;
+    
+//    public List<StudentAppointment> findAppointed(String sId){
+//        List<AppointmentRecord> appointmentRecords = appointmentRecordDao.findBySIdAndIsAppointed(sId,1);
+//        List<StudentAppointment> result = new ArrayList<>();
+//
+//        System.out.println(appointmentRecords);
+//        for(AppointmentRecord appointmentRecord: appointmentRecords){
+//            StudentAppointment studentAppointment = new StudentAppointment();
+//            studentAppointment.setaId(appointmentRecord.getaId());
+//            studentAppointment.settName(appointmentDao.findByAId(appointmentRecord.getaId()).gettId());
+//            studentAppointment.setStart(appointmentDao.findByAId(appointmentRecord.getaId()).getStart());
+//            studentAppointment.setEnd(appointmentDao.findByAId(appointmentRecord.getaId()).getEnd());
+//            studentAppointment.setIsAppointed(appointmentRecord.getIsAppointed());
+//            result.add(studentAppointment);
+//        }
+//        return result;
+//    }
+
 
     //返回已预约和未预约的预约列表
     public List<StudentAppointment> findAllAppointments(String sId){

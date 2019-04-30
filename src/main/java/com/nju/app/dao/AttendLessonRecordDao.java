@@ -18,4 +18,7 @@ public interface AttendLessonRecordDao extends JpaRepository<AttendLessonRecord,
 
     //查询到课人数
     public int countByLIdAndIsAttended(String lId, Integer isAttended);
+
+    //查询某学生的所有到课记录
+    public List<AttendLessonRecord> findBySIdAndIsAttended(String sId, Integer isAttended);
 }

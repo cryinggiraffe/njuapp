@@ -78,7 +78,12 @@ public class VideoController {
     @RequestMapping("uploadvideo/save")
     public String upload(@RequestParam("file") MultipartFile file, HttpServletRequest request, Model model){
 
-        String url = "static/video/";
+        if( (file == null) || file.getName().equals("") || file.getName() == null){
+
+            return "";
+        }
+
+        //String url = "static/video/";
         //String path = request.getSession().getServletContext().getRealPath(url);
         //String path = ClassUtils.getDefaultClassLoader().getResource("").getPath()+url;
         //String path = "/Users/shahao/Downloads/nju/video/";
