@@ -93,6 +93,8 @@ var vm = new Vue({
                     var date_value_end = date_end.getFullYear() + '-' + (date_end.getMonth() + 1) + '-' + date_end.getDate() + ' ' + date_end.getHours() + ':' + date_end.getMinutes() + ':' + date_end.getSeconds();
 
                     this.appointments[i].end = date_value_end + '';
+
+                    
                 }
 
                 this.loading.close(); //数据更新成功就手动关闭动画

@@ -36,7 +36,7 @@ public class LocationController {
                          @RequestParam("longitude") String longitude,
                          @RequestParam("radius") String radius){
 
-        Date now = new Date();
+        Date now = new Date(lTime);
         List<Lesson> all = lessonDao.findByCId(cId);
         boolean first = true;
         Lesson lesson = new Lesson();
@@ -45,12 +45,12 @@ public class LocationController {
         if (all != null){
             for (int i = 0; i < all.size(); i++){
                 if ((all.get(i).getStart().getTime() <= now.getTime()) && (all.get(i).getEnd().getTime() > now.getTime())){
-                    if (lessonLocationDao.findByLId(lesson.getlId()).getLatitude().length() > 0){
+                    //if (lessonLocationDao.findByLId(lesson.getlId()).getLatitude().length() > 0){
                         lesson = all.get(i);
                         lessonLocation = lessonLocationDao.findByLId(all.get(i).getlId());
                         first = false;
                         break;
-                    }
+                    //}
                 }
             }
         }
@@ -80,9 +80,9 @@ public class LocationController {
         try{
             lesson.setlTime(new Date(lTime));
 
-            Date date = new Date();
-            lesson.setStart(date);
-            lesson.setEnd(new Date(date.getTime() + 600000*6));
+
+            lesson.setStart(now);
+            lesson.setEnd(new Date(now.getTime() + 600000*6));
             System.out.println(lesson);
             lessonDao.saveAndFlush(lesson);
             lessonLocationDao.saveAndFlush(lessonLocation);

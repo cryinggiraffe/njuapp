@@ -117,7 +117,7 @@ public class LessonController {
             //lesson.setlTime(simpleDateFormat.parse(StrLTime.toString()));
             lesson.setlTime(new Date(lTime));
 
-            Date date = new Date();
+            Date date = new Date(lTime);
             lesson.setStart(date);
             lesson.setEnd(new Date(date.getTime() + 600000*6));
             System.out.println(lesson);
