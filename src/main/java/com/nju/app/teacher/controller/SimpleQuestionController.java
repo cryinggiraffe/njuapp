@@ -48,6 +48,7 @@ public class SimpleQuestionController {
         SimpleQuestion simpleQuestion = new SimpleQuestion();
 
         String sqId = cId + GetUUID.getUUID();
+        simpleQuestion.setcId(cId);
         simpleQuestion.setSqId(sqId);
         simpleQuestion.setSqContent(sqContent);
         simpleQuestion.setSqCorrectAnswer(sqCorrectAnswer);

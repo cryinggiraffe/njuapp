@@ -2,6 +2,7 @@ package com.nju.app.teacher.controller;
 
 import com.nju.app.dao.*;
 import com.nju.app.entities.*;
+import com.nju.app.utils.GetUUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +23,20 @@ public class HomeworkController {
     @Autowired
     ChoiceQuestionController choiceQuestionController;
 
+    @Autowired
+    SimpleQuestionController simpleQuestionController;
+
     @ResponseBody
     @RequestMapping(value = "/getAllCourseQuestions")
     public List<ChoiceQuestion> getQuestionList(@RequestParam(value = "c_id") String cId){
         List<ChoiceQuestion> list = choiceQuestionController.findAllChoiceQuestions(cId);
+        return list;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getAllSimpleQuestions")
+    public List<SimpleQuestion> getSimpleQuestionList(@RequestParam(value = "c_id") String cId){
+        List<SimpleQuestion> list = simpleQuestionController.findAllSimpleQuestions(cId);
         return list;
     }
 
@@ -92,10 +103,11 @@ public class HomeworkController {
     @ResponseBody
     @RequestMapping(value = "/publishHomework")
     public Result publishHomework(@RequestParam(value = "c_id") String cId,
-                                  @RequestParam(value = "h_id") String hId,
                                   @RequestParam(value = "h_title") String hTitle,
                                   @RequestParam(value = "release_time") String date,
-                                  @RequestParam(value = "selected") String selected){
+                                  @RequestParam(value = "selected") String selected,
+                                  @RequestParam(value = "selectedS") String selectedS){
+        String hId = cId + GetUUID.getUUID();
         Homework temp = new Homework();
         List<Homework> list = homeworkDao.findByCId(cId);
         for(int i=0;i<list.size();i++){
@@ -111,12 +123,24 @@ public class HomeworkController {
         homework.setReleasetime(strToDate(date));
         homeworkDao.saveAndFlush(homework);
 
-        String[] sqId = selected.split("/");
-        for(int i = 0;i<sqId.length;i++){
-            HomeworkQuestionRecord homeworkQuestionRecord = new HomeworkQuestionRecord();
-            homeworkQuestionRecord.setCqId(String.valueOf(sqId[i]));
-            homeworkQuestionRecord.sethId(hId);
-            homeworkQuestionRecordDao.save(homeworkQuestionRecord);
+        if(selected.length()>0){
+            String[] sqId = selected.split("/");
+            for(int i = 0;i<sqId.length;i++){
+                HomeworkQuestionRecord homeworkQuestionRecord = new HomeworkQuestionRecord();
+                homeworkQuestionRecord.setCqId(String.valueOf(sqId[i]));
+                homeworkQuestionRecord.sethId(hId);
+                homeworkQuestionRecordDao.save(homeworkQuestionRecord);
+            }
+        }
+
+        if(selectedS.length()>0){
+            String[] sqIdS = selectedS.split("/");
+            for(int j = 0;j<sqIdS.length;j++){
+                HomeworkQuestionRecord homeworkQuestionRecord = new HomeworkQuestionRecord();
+                homeworkQuestionRecord.setSqId(String.valueOf(sqIdS[j]));
+                homeworkQuestionRecord.sethId(hId);
+                homeworkQuestionRecordDao.save(homeworkQuestionRecord);
+            }
         }
 
         return new Result(true,homework.gethId());
