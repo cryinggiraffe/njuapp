@@ -1,9 +1,6 @@
 package com.nju.app.student.service;
 
-import com.nju.app.dao.ChoiceQuestionDao;
-import com.nju.app.dao.ChoiceQuestionRecordDao;
-import com.nju.app.dao.HomeworkDao;
-import com.nju.app.dao.HomeworkQuestionRecordDao;
+import com.nju.app.dao.*;
 import com.nju.app.entities.*;
 import com.nju.app.student.entities.ChoiceQuestionStatistic;
 import com.nju.app.student.entities.StatisticContent;
@@ -27,6 +24,54 @@ public class StudentHomeworkService {
 
     @Autowired
     ChoiceQuestionRecordDao choiceQuestionRecordDao;
+
+    @Autowired
+    SimpleQuestionDao simpleQuestionDao;
+
+    @Autowired
+    SimpleQuestionRecordDao simpleQuestionRecordDao;
+
+    public String getHomeworkTypeByHId(String hId) {
+        List<HomeworkQuestionRecord> questionRecords = homeworkQuestionRecordDao.findByHId(hId);
+        if (questionRecords.get(0).getCqId() == null){
+            return "sq";
+        }
+        return "cq";
+    }
+
+    public SimpleQuestion getSimpleQuestionByHId(String hId){
+        List<HomeworkQuestionRecord> questionRecords = homeworkQuestionRecordDao.findByHId(hId);
+        SimpleQuestion result = new SimpleQuestion();
+        if (questionRecords.size() == 0 || questionRecords == null){
+            return result;
+        }
+        return simpleQuestionDao.findBySqId(questionRecords.get(0).getSqId());
+    }
+
+    public boolean isSimpleSubmit(String hId, String sId){
+        List<SimpleQuestionRecord> simpleQuestionRecords = simpleQuestionRecordDao.findBySIdAndHId(sId, hId);
+
+        if (simpleQuestionRecords.size() > 0){
+            return true;
+        }
+
+        return false;
+    }
+
+    public Result submitSimpleRe(String hId, String sId, String sqId, String sqResult){
+        SimpleQuestionRecord simpleQuestionRecord = new SimpleQuestionRecord();
+        simpleQuestionRecord.sethId(hId);
+        simpleQuestionRecord.setsId(sId);
+        simpleQuestionRecord.setSqId(sqId);
+        simpleQuestionRecord.setSqResult(sqResult);
+
+        try {
+            simpleQuestionRecordDao.saveAndFlush(simpleQuestionRecord);
+            return new Result(true, "提交成功");
+        }catch (Exception e){
+            return new Result(false, "发生未知错误");
+        }
+    }
 
     public List<Homework> getHomeworkByCId(String cId){
 //        System.out.println(homeworkDao.findByCId(cId));

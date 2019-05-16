@@ -44,13 +44,11 @@ public class LocationController {
 
         if (all != null){
             for (int i = 0; i < all.size(); i++){
-                if ((all.get(i).getStart().getTime() <= now.getTime()) && (all.get(i).getEnd().getTime() > now.getTime())){
-                    //if (lessonLocationDao.findByLId(lesson.getlId()).getLatitude().length() > 0){
-                        lesson = all.get(i);
-                        lessonLocation = lessonLocationDao.findByLId(all.get(i).getlId());
-                        first = false;
-                        break;
-                    //}
+                if ((all.get(i).getStart().getTime() <= now.getTime()) && (all.get(i).getEnd().getTime() > now.getTime()) && all.get(i).getSignCode() == null){
+                    lesson = all.get(i);
+                    lessonLocation = lessonLocationDao.findByLId(all.get(i).getlId());
+                    first = false;
+                    break;
                 }
             }
         }
