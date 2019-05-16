@@ -4,7 +4,9 @@ import com.google.gson.Gson;
 import com.nju.app.entities.ChoiceQuestion;
 import com.nju.app.entities.Homework;
 import com.nju.app.entities.Result;
+import com.nju.app.entities.SimpleQuestion;
 import com.nju.app.student.entities.ChoiceQuestionStatistic;
+import com.nju.app.student.entities.QuestionContent;
 import com.nju.app.student.service.StudentHomeworkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,9 +32,44 @@ public class StudentHomeworkController {
     }
 
     @ResponseBody
-    @RequestMapping("/question/findChoiceQuestion")
-    public List<ChoiceQuestion> getChoiceQuestionByHId(@RequestParam("hId") String hId){
-        return studentHomeworkService.getChoiceQuestionByHId(hId);
+    @RequestMapping("/question/findQuestion")
+    public QuestionContent getChoiceQuestionByHId(@RequestParam("hId") String hId){
+        String type = studentHomeworkService.getHomeworkTypeByHId(hId);
+        List<ChoiceQuestion> choiceQuestions = new LinkedList<>();
+        //CHANGE
+        SimpleQuestion simpleQuestion = new SimpleQuestion();
+        QuestionContent questionContent = new QuestionContent();
+
+        if (type.equals("cq")){
+            choiceQuestions = studentHomeworkService.getChoiceQuestionByHId(hId);
+        }else {
+            simpleQuestion = studentHomeworkService.getSimpleQuestionByHId(hId);
+        }
+        questionContent.setType(type);
+        questionContent.setChoiceQuestions(choiceQuestions);
+        questionContent.setSimpleQuestion(simpleQuestion);
+        return questionContent;
+    }
+
+    @ResponseBody
+    @RequestMapping("/question/submitSimpleQuestion")
+    public Result answerSimpleQuestion(@RequestParam("hId") String hId,
+                                       @RequestParam("sId") String sId,
+                                       @RequestParam("sqId")String sqId,
+                                       @RequestParam("sqResult")String sqResult){
+        if (studentHomeworkService.isSimpleSubmit(hId, sId)){
+            return new Result(false, "已经提交！");
+        }
+
+        try {
+            studentHomeworkService.submitSimpleRe(hId, sId, sqId, sqResult);
+        } catch (Exception e){
+            return new Result(false, "未知错误");
+        }
+
+        return new Result(true, "提交成功");
+
+
     }
 
     @ResponseBody

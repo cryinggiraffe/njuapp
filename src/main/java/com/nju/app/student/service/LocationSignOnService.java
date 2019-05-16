@@ -36,9 +36,8 @@ public class LocationSignOnService {
 
         List<Lesson> signOn_list = new LinkedList<>();
         for (Lesson lesson : lessons){
-
             if ((lesson.getStart().getTime() <= date.getTime()) && (lesson.getEnd().getTime() > date.getTime())){
-                if (lessonLocationDao.findByLId(lesson.getlId()).getLatitude().length() > 0 && lessonLocationDao.findByLId(lesson.getlId()).getLongitude().length() > 0){
+                if (lesson.getSignCode() == null){
                     signOn_list.add(lesson);
                 }
             }
